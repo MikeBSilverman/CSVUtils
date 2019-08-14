@@ -18,7 +18,15 @@
 #include "..\Common\CSVFilter.h"
 #include "..\Common\FileOps.h"
 
-static std::deque<std::string *> rowsToProcessQueue;
+enum jobType {
+	jobUseFilters,
+	jobUsePercentage,
+	jobUseUnknown
+};
+
+
+
+static std::deque<processStruct *> rowsToProcessQueue;
 static std::mutex rowsToProcessMutex;
 
 static std::atomic_bool finishInputs = false;
@@ -30,12 +38,17 @@ static CLParams globalParams;
 static FileOps globalFileOps;
 
 void LoadColumnNames(std::string, std::vector<std::string>&);
-int IterateThroughFile(filterParamVectorType&);
-long MainInputFileLoop(bool&);
+int IterateThroughFile(jobType, filterParamVectorType&);
+long MainInputFileLoop(bool&, jobType);
 int ProcessFilterSingleRow(std::string*, filterParamVectorType*);
-void ProcessRowFunc(filterParamVectorType*);
+void ProcessRowFilterFunc(filterParamVectorType*);
+void ProcessRowPercentageFunc();
 void ProcessOutputQueueFunc(bool);
 void ApplyKeepRemoveCols(std::string*);
+
+const int queueUpdateSize = 5;
+const int outputFrequency = 10000;
+
 
  // CSVSplit.exe parameters
 // -inputf "file name of data to analyze" (Required)
@@ -49,6 +62,7 @@ void ApplyKeepRemoveCols(std::string*);
 //		e.g. -filter1 Year ge 2009 AND -filter2 Year le 2014
 // -processqueuebuffer # of bytes to use for input buffer (default = 1000000000)
 // -coltoremove[n] or coltokeep[n] positive or negative list of column names to keep/remove
+// -percentagesplit .xx  - e.g. if .80 then 80% goes into normal file, remainder 20% will go into other file
 
 int main(int argc, char* argv[])
 {
@@ -58,7 +72,8 @@ int main(int argc, char* argv[])
 	std::string headerRow = "";
 	std::vector<std::string> columnInfo;
 	filterParamVectorType filterInfo;
-	
+	jobType jobToUse = jobUseUnknown;
+
 	if (argc < 2) {
 		// nothing to run
 		std::cerr << "No parameters passed." << std::endl;
@@ -94,8 +109,20 @@ int main(int argc, char* argv[])
 	}
 
 	if (err == 0) {
-		// Load filters from args
-		err = LoadFilters(filterInfo, inputParameters, columnInfo);
+		// see if a percentage split vs. a filter (can be only one)
+		globalParams.GetPercentageSplit(inputParameters);
+		if (globalParams.percentageSplit > 0.0f) {
+			// Get file length
+			globalFileOps.inputFileRows = globalFileOps.GetRowCountFromFile(globalFileOps.inputFileName, globalFileOps.inFile, false);
+			std::getline(globalFileOps.inFile, headerRow); // reopened the file, so skip ahead
+			jobToUse = jobUsePercentage;
+		}
+		else {
+			// not a split
+			// Load filters from args
+			err = LoadFilters(filterInfo, inputParameters, columnInfo);
+			jobToUse = jobUseFilters;
+		}
 	}
 
 	if (err == 0) {
@@ -103,7 +130,7 @@ int main(int argc, char* argv[])
 		try {
 			ApplyKeepRemoveCols(&headerRow);
 			globalFileOps.WriteHeaderRow(headerRow);
-			IterateThroughFile(filterInfo);
+			IterateThroughFile(jobToUse, filterInfo);
 		}
 		catch (std::exception& e) {
 			std::cerr << std::endl << "Exception encountered.  Terminating before end of input file: " << e.what() << std::endl;
@@ -118,7 +145,7 @@ int main(int argc, char* argv[])
 
 // Setup threads for output and processing
 // Then loop through the file
-int IterateThroughFile(filterParamVectorType& filterInfo) {
+int IterateThroughFile(jobType jobTypeToProc, filterParamVectorType& filterInfo) {
 	std::vector<std::thread*> threadPool;
 	std::thread* outputNormalThread = nullptr;
 	std::thread* outputOtherThread = nullptr;
@@ -129,12 +156,23 @@ int IterateThroughFile(filterParamVectorType& filterInfo) {
 
 	// setup threads and queues
 	// TODO: Give option for GPU (have to figure out if cost of copying to GPU is worthwhile, maybe only for long running operations such as long functioncalls) 
-	// ANd technically would have to write those functions without STD library.
+	// And technically would have to write those functions without STD library.
 	
 	numThreads = ((std::thread::hardware_concurrency() - overheadThreads) <= 1 ? 1 : std::thread::hardware_concurrency() - overheadThreads); // minimum 1 thread for work
 	//numThreads = 1;
 	for (i = 0; i < numThreads; ++i) {
-		threadPool.push_back(new std::thread(ProcessRowFunc, &filterInfo));
+		switch (jobTypeToProc) {
+		case jobUseFilters:
+			threadPool.push_back(new std::thread(ProcessRowFilterFunc, &filterInfo));
+			break;
+		case jobUsePercentage:
+			threadPool.push_back(new std::thread(ProcessRowPercentageFunc));
+			break;
+		case jobUseUnknown:
+		default:
+			throw std::runtime_error("Unknown Job Type");
+			break;
+		}
 	}
 	outputNormalThread = new std::thread(ProcessOutputQueueFunc, true);
 	if (isOtherOutputThreadNeeded) {
@@ -142,7 +180,9 @@ int IterateThroughFile(filterParamVectorType& filterInfo) {
 	}
 
 	// main loop
-	long rowsProcessed = MainInputFileLoop(isOtherOutputThreadNeeded);
+	long rowsProcessed = MainInputFileLoop(isOtherOutputThreadNeeded, jobTypeToProc);
+
+	// signal to worker threads to stop
 	finishInputs = true;
 
 	std::cout << "Finished loading " << rowsProcessed << " rows, now finishing processing and writing.                                            \r";
@@ -167,7 +207,7 @@ int IterateThroughFile(filterParamVectorType& filterInfo) {
 	return 0;
 }
 
-long MainInputFileLoop(bool& isOtherOutputThreadNeeded) {
+long MainInputFileLoop(bool& isOtherOutputThreadNeeded, jobType jobTypeToProc) {
 	long rowNum = 1l;
 	unsigned long long maxRowSize = 0;
 
@@ -177,15 +217,16 @@ long MainInputFileLoop(bool& isOtherOutputThreadNeeded) {
 		size_t outputOtherQueueSize = 0;
 		
 		// Read data from file
-		std::string* rowData = new std::string();  // will get deleted when written to the output file
-		std::getline(globalFileOps.inFile, *rowData);
-		*rowData = StripQuotesString(*rowData);
-		maxRowSize = std::max(maxRowSize, (unsigned long long)rowData->size());
+		processStruct* rowStruct = new processStruct;  // will get deleted when written to the output file
+		std::getline(globalFileOps.inFile, rowStruct->rowData);
+		
+		rowStruct->rowData = StripQuotesString(rowStruct->rowData);
+		maxRowSize = std::max(maxRowSize, (unsigned long long)rowStruct->rowData.size());
 
 		// check for max buffer size every 5 rows.  Chance to exceed buffer, but limited with such a small # of checks.
 		// better performance than checking every cycle
 		
-		if (rowNum % 5 == 0) {
+		if (rowNum % queueUpdateSize == 0) {
 			bool atBufferLimit = true;
 			do {
 				// Get various queue sizes
@@ -199,8 +240,6 @@ long MainInputFileLoop(bool& isOtherOutputThreadNeeded) {
 					outputOtherQueueSize = globalFileOps.GetQueueSize(false);
 				}
 
-				//unsigned long long currentQueueSize = ((unsigned long long)maxRowSize * ((unsigned long long)(procQueueSize)) + (unsigned long long)(outputNormalQueueSize) + (unsigned long long)(outputOtherQueueSize));
-
 				if (((unsigned long long)maxRowSize * ((unsigned long long)(procQueueSize)) + (unsigned long long)(outputNormalQueueSize) + (unsigned long long)(outputOtherQueueSize)) > globalParams.processQueueBuffer) {
 					std::this_thread::sleep_for(std::chrono::milliseconds(10));
 				}
@@ -211,30 +250,32 @@ long MainInputFileLoop(bool& isOtherOutputThreadNeeded) {
 		}
 
 		// add to queue for processing
-		if ((rowData != nullptr) && (rowData->length() > 0)) {
+		if ((rowStruct != nullptr) && (rowStruct->rowData.length() > 0)) {
 			rowsToProcessMutex.lock();
-			rowsToProcessQueue.push_back(rowData);
+			rowsToProcessQueue.push_back(rowStruct);
 			rowsToProcessMutex.unlock();
 		}
 		// Update user
-		if (rowNum % 10000 == 0) {
-			std::cout << "Row: " << rowNum << " Proc Queue: " << procQueueSize << " NOutput: " << outputNormalQueueSize << " OOutput: " << outputOtherQueueSize << "              \r";
+		if (rowNum % outputFrequency == 0) {
+			std::cout << "Row: " << rowNum << " Waiting to Process Queue: " << procQueueSize << "\t # Rows queue Normal: " << outputNormalQueueSize << "\t # Rows queue Other: " << outputOtherQueueSize << "              \r";
 		}
 		++rowNum;
 	}
 	return rowNum;
 }
 
-void ProcessRowFunc(filterParamVectorType* filterInfo) {
-	std::string * rowData = nullptr;
+void ProcessRowFilterFunc(filterParamVectorType* filterInfo) {
+	
+	processStruct* procStruct;
 	bool keepWorking = true;
 	
 	do {
 		int keepRow = (int)false;
 		bool emptyQueue = true;
 		rowsToProcessMutex.lock();
+		procStruct = nullptr;
 		if (!rowsToProcessQueue.empty()) {
-			rowData = rowsToProcessQueue.front();
+			procStruct = rowsToProcessQueue.front();
 			rowsToProcessQueue.pop_front();
 			rowsToProcessMutex.unlock();
 			emptyQueue = false;
@@ -247,29 +288,30 @@ void ProcessRowFunc(filterParamVectorType* filterInfo) {
 			// Process the row for filtering
 			keepRow = (int)true;
 			if (filterInfo->size() > 0) {
-				keepRow = ProcessFilterSingleRow(rowData, filterInfo);
+				_ASSERT(procStruct != nullptr);
+				keepRow = ProcessFilterSingleRow(&procStruct->rowData, filterInfo);
 				if (keepRow > (int)true) {
 					// something went wrong
-					delete rowData;
+					delete procStruct;
 					throw std::runtime_error("Error in ProcessFilterSingleRow");
 				}
 			} 
 
 			if (keepRow == (int)true) {
 				// add to normal output queue
-				ApplyKeepRemoveCols(rowData);
-				globalFileOps.AddDataToOutputQueue(true, rowData);
+				ApplyKeepRemoveCols(&procStruct->rowData);
+				globalFileOps.AddDataToOutputQueue(true, procStruct);
 			}
 			else {
 				// check if it goes to the "other" file
 				if (globalFileOps.outFileOther.is_open()) {
-					ApplyKeepRemoveCols(rowData);
-					globalFileOps.AddDataToOutputQueue(false, rowData);
+					ApplyKeepRemoveCols(&procStruct->rowData);
+					globalFileOps.AddDataToOutputQueue(false, procStruct);
 				}
 				else {
 					// not needed, delete
-					delete rowData;
-					rowData = nullptr;
+					delete procStruct;
+					procStruct = nullptr;
 				}
 			}
 		}
@@ -285,16 +327,76 @@ void ProcessRowFunc(filterParamVectorType* filterInfo) {
 }
 
 
+void ProcessRowPercentageFunc() {
+
+	/*processStruct* procStruct;
+	bool keepWorking = true;
+
+	do {
+		int keepRow = (int)false;
+		bool emptyQueue = true;
+		rowsToProcessMutex.lock();
+		if (!rowsToProcessQueue.empty()) {
+			procStruct = rowsToProcessQueue.front();
+			rowsToProcessQueue.pop_front();
+			rowsToProcessMutex.unlock();
+			emptyQueue = false;
+		}
+		else {
+			rowsToProcessMutex.unlock();
+		}
+
+		if (!emptyQueue) {
+			// Process the row for filtering
+			keepRow = (int)true;
+			if (filterInfo->size() > 0) {
+				keepRow = ProcessFilterSingleRow(&procStruct->rowData, filterInfo);
+				if (keepRow > (int)true) {
+					// something went wrong
+					delete procStruct;
+					throw std::runtime_error("Error in ProcessFilterSingleRow");
+				}
+			}
+
+			if (keepRow == (int)true) {
+				// add to normal output queue
+				ApplyKeepRemoveCols(&procStruct->rowData);
+				globalFileOps.AddDataToOutputQueue(true, procStruct);
+			}
+			else {
+				// check if it goes to the "other" file
+				if (globalFileOps.outFileOther.is_open()) {
+					ApplyKeepRemoveCols(&procStruct->rowData);
+					globalFileOps.AddDataToOutputQueue(false, procStruct);
+				}
+				else {
+					// not needed, delete
+					delete procStruct;
+					procStruct = nullptr;
+				}
+			}
+		}
+		else {
+			if (!finishInputs) {
+				std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			}
+			else {
+				keepWorking = false;
+			}
+		}
+	} while (keepWorking);*/
+}
+
 void ProcessOutputQueueFunc(bool isNormalOutput) {
 	
 	bool keepWorking = true;
 	
 	do {
-		std::string* rowData = globalFileOps.GetTopOfQueue(isNormalOutput);
+		processStruct* procStruct = globalFileOps.GetTopOfQueue(isNormalOutput);
 
-		if (rowData != nullptr) {
+		if (procStruct != nullptr) {
 			// Process the row
-			globalFileOps.WriteOutputRow(isNormalOutput, rowData);
+			globalFileOps.WriteOutputRow(isNormalOutput, procStruct);
 		}
 		else {
 			if (!finishProcThreads) {

@@ -14,6 +14,10 @@ enum colOperations {
 	colRemoveAsRemove
 };
 
+const long defaultProcQueueLength = 1000000000l;
+const long minimumProcQueueLength = 16000000l;
+const long overheadProcQueueLength = 20000000l;
+
 class CLParams
 {
 public:
@@ -25,6 +29,7 @@ public:
 	std::string FindParamChar(const char *, inputParamVectorType&, int);
 	void GetOperationalParams(inputParamVectorType&);
 	void GiveColNumToNames(std::vector<std::string>&, bool = true);
+	void GetPercentageSplit(inputParamVectorType&);
 
 	bool cleanExtraQuotesParam = false;
 	unsigned long long processQueueBuffer = 0l;
@@ -33,6 +38,7 @@ public:
 	colNumberQueueType colsToModifyNums;
 	colNumberQueueType colsToModifyNumsSecond;
 	colOperations columnOperations = colNotDefined;
+	float percentageSplit = -1.0f;
 
 private:
 	void GetParamQueueBuffer(inputParamVectorType&);

@@ -16,10 +16,10 @@ FileOps::~FileOps()
 
 int FileOps::OpenFiles(inputParamVectorType& inputParameters, CLParams& params, bool requireSecondInput) {
 	// Find Input and output files
-	std::string inputFileName = params.FindParamChar("-inputf", inputParameters, 1);
-	std::string inputFileNameSecond = params.FindParamChar("-inputfsecond", inputParameters, 1);
-	std::string outputFileName = params.FindParamChar("-outputf", inputParameters, 1);
-	std::string outputFileNameOther = params.FindParamChar("-outputfother", inputParameters, 1);
+	inputFileName = params.FindParamChar("-inputf", inputParameters, 1);
+	inputFileNameSecond = params.FindParamChar("-inputfsecond", inputParameters, 1);
+	outputFileName = params.FindParamChar("-outputf", inputParameters, 1);
+	outputFileNameOther = params.FindParamChar("-outputfother", inputParameters, 1);
 
 	if ((inputFileName == "") || (outputFileName == "")) {
 		std::cerr << "Both input and output file names not given." << std::endl;
@@ -63,7 +63,7 @@ void FileOps::CloseFiles() {
 
 size_t FileOps::GetQueueSize(bool isNormalOutput)
 {
-	std::deque<std::string *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
+	std::deque<processStruct *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
 	std::mutex* thisMutex = (isNormalOutput ? &rowsToWriteNormalMutex : &rowsToWriteOtherMutex);
 
 	thisMutex->lock();
@@ -75,26 +75,26 @@ size_t FileOps::GetQueueSize(bool isNormalOutput)
 
 
 void FileOps::WriteHeaderRow(std::string& headerRow) {
-	std::string workingHeaderRow = headerRow;
-	workingHeaderRow = StripQuotesString(workingHeaderRow);
+	processStruct headerProc;
+	headerProc.rowData = StripQuotesString(headerRow);
 
-	WriteOutputRow(true, &workingHeaderRow, false);
+	WriteOutputRow(true, &headerProc, false);
 	if (outFileOther.is_open()) {
-		WriteOutputRow(false, &workingHeaderRow, false);
+		WriteOutputRow(false, &headerProc, false);
 	}
 }
 
-void FileOps::WriteOutputRow(bool isNormalOutput, std::string* rowData, bool deleteRowData) {
+void FileOps::WriteOutputRow(bool isNormalOutput, processStruct* rowStruct, bool deleteRowData) {
 	std::ofstream* thisOutfile = (isNormalOutput ? &outFile : &outFileOther);
 	std::mutex* thisMutex = (isNormalOutput ? &outputNormalFileWriteMutex : &outputOtherFileWriteMutex);
 
 	thisMutex->lock();
-	*thisOutfile << *rowData << std::endl;
+	*thisOutfile << rowStruct->rowData << std::endl;
 	thisOutfile->flush();
 	thisMutex->unlock();
 
 	if (deleteRowData) {
-		delete rowData;
+		delete rowStruct;
 	}
 }
 
@@ -125,11 +125,11 @@ bool FileOps::OpenSingleFile(std::string& fileName, std::ofstream& outFile) {
 
 
 
-std::string* FileOps::GetTopOfQueue(bool isNormalOutput) {
-	std::deque<std::string *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
+processStruct* FileOps::GetTopOfQueue(bool isNormalOutput) {
+	std::deque<processStruct *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
 	std::mutex* thisMutex = (isNormalOutput ? &rowsToWriteNormalMutex : &rowsToWriteOtherMutex);
 
-	std::string* rowData = nullptr;
+	processStruct* rowData = nullptr;
 
 	thisMutex->lock();
 	if (!thisQueue->empty()) {
@@ -144,11 +144,31 @@ std::string* FileOps::GetTopOfQueue(bool isNormalOutput) {
 	return rowData;
 }
 
-void FileOps::AddDataToOutputQueue(bool isNormalOutput, std::string* rowData) {
-	std::deque<std::string *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
+void FileOps::AddDataToOutputQueue(bool isNormalOutput, processStruct* procStruct) {
+	std::deque<processStruct *>* thisQueue = (isNormalOutput ? &rowsToWriteNormalQueue : &rowsToWriteOtherQueue);
 	std::mutex* thisMutex = (isNormalOutput ? &rowsToWriteNormalMutex : &rowsToWriteOtherMutex);
 
 	thisMutex->lock();
-	thisQueue->push_back(rowData);
+	thisQueue->push_back(procStruct);
 	thisMutex->unlock();
+}
+
+unsigned long long FileOps::GetRowCountFromFile(std::string filename, std::ifstream& inFile, bool skipHeader) {
+	unsigned long long rowCount = 0l;
+	std::string readRow;
+	do {
+		std::getline(inFile, readRow);
+		if (readRow.length() > 0) {
+			++rowCount;
+		}
+	} while ((readRow.length() > 0) && (!inFile.eof()));
+
+	if (skipHeader) {
+		--rowCount; // decrement header row
+	}
+
+	// close and reopen file
+	inFile.close();
+	inFile.open(filename, std::ios::in);
+	return rowCount;
 }

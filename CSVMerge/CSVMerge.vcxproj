@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\CLParams.h" />
-    <ClInclude Include="..\Common\CSVFilter.h" />
     <ClInclude Include="..\Common\FileOps.h" />
     <ClInclude Include="..\Common\UtilFuncs.h" />
     <ClInclude Include="stdafx.h" />
@@ -156,7 +155,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\CLParams.cpp" />
-    <ClCompile Include="..\Common\CSVFilter.cpp" />
     <ClCompile Include="..\Common\FileOps.cpp" />
     <ClCompile Include="..\Common\UtilFuncs.cpp" />
     <ClCompile Include="CSVMerge.cpp" />

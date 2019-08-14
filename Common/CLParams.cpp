@@ -46,12 +46,12 @@ void CLParams::GetParamQueueBuffer(inputParamVectorType& inputParameters) {
 		processQueueBuffer = std::stol(bufferLength);
 	}
 	else {
-		processQueueBuffer = 1000000000l;
+		processQueueBuffer = defaultProcQueueLength;
 	}
 
-	processQueueBuffer -= 20000000l; // overhead
-	if (processQueueBuffer < 16000000l) {
-		processQueueBuffer = 16000000l; // minimum of 16MB
+	processQueueBuffer -= overheadProcQueueLength; // overhead
+	if (processQueueBuffer < minimumProcQueueLength) {
+		processQueueBuffer = minimumProcQueueLength; // minimum of 16MB
 	}
 }
 
@@ -145,4 +145,16 @@ void CLParams::GiveColNumToNames(std::vector<std::string>& columnNames, bool isF
 
 	// sort col numbers in order
 	std::sort(numQueue->begin(), numQueue->end());
+}
+
+void CLParams::GetPercentageSplit(inputParamVectorType& inputParameters) {
+	std::string splitStr = FindParamChar("-percentagesplit", inputParameters, 1);
+	if (splitStr.length() > 0) {
+		try {
+			percentageSplit = std::stof(splitStr);
+		}
+		catch (...) {
+			percentageSplit = -1.0f;
+		}
+	}
 }
