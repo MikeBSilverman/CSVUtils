@@ -12,7 +12,7 @@
 #include <deque>
 #include <algorithm>
 #include <map>
-
+#include <random>
 #include "..\Common\UtilFuncs.h"
 #include "..\Common\CLParams.h"
 #include "..\Common\CSVFilter.h"
@@ -24,8 +24,6 @@ enum jobType {
 	jobUseUnknown
 };
 
-
-
 static std::deque<processStruct *> rowsToProcessQueue;
 static std::mutex rowsToProcessMutex;
 
@@ -36,15 +34,17 @@ static filterOpMap mapFilterOpValues;
 static filterJoinOpMap mapFilterJoinOpValues;
 static CLParams globalParams;
 static FileOps globalFileOps;
+static std::mt19937 randGenerator(std::random_device{}());
 
 void LoadColumnNames(std::string, std::vector<std::string>&);
 int IterateThroughFile(jobType, filterParamVectorType&);
-long MainInputFileLoop(bool&, jobType);
+long long MainInputFileLoop(bool&, jobType);
 int ProcessFilterSingleRow(std::string*, filterParamVectorType*);
 void ProcessRowFilterFunc(filterParamVectorType*);
 void ProcessRowPercentageFunc();
 void ProcessOutputQueueFunc(bool);
 void ApplyKeepRemoveCols(std::string*);
+void GenerateListOfRowsToSplit(std::deque<long long>&);
 
 const int queueUpdateSize = 5;
 const int outputFrequency = 10000;
@@ -180,7 +180,7 @@ int IterateThroughFile(jobType jobTypeToProc, filterParamVectorType& filterInfo)
 	}
 
 	// main loop
-	long rowsProcessed = MainInputFileLoop(isOtherOutputThreadNeeded, jobTypeToProc);
+	long long rowsProcessed = MainInputFileLoop(isOtherOutputThreadNeeded, jobTypeToProc);
 
 	// signal to worker threads to stop
 	finishInputs = true;
@@ -207,10 +207,15 @@ int IterateThroughFile(jobType jobTypeToProc, filterParamVectorType& filterInfo)
 	return 0;
 }
 
-long MainInputFileLoop(bool& isOtherOutputThreadNeeded, jobType jobTypeToProc) {
-	long rowNum = 1l;
+long long MainInputFileLoop(bool& isOtherOutputThreadNeeded, jobType jobTypeToProc) {
+	long long rowNum = 1l;
 	unsigned long long maxRowSize = 0;
+	std::deque<long long> listOfRowsToSplitToOtherFile;
+	
+	// Determine which rows (randomly) get split off
+	GenerateListOfRowsToSplit(listOfRowsToSplitToOtherFile);
 
+	// Iterate through file
 	while (!globalFileOps.inFile.eof()) {
 		size_t procQueueSize = 0;
 		size_t outputNormalQueueSize = 0;
@@ -251,13 +256,25 @@ long MainInputFileLoop(bool& isOtherOutputThreadNeeded, jobType jobTypeToProc) {
 
 		// add to queue for processing
 		if ((rowStruct != nullptr) && (rowStruct->rowData.length() > 0)) {
+			// check if a percentage split job
+			//rowStruct->writeNormal = true;  // set to true by default
+
+			if (jobTypeToProc == jobUsePercentage) {
+				// split this row off?
+				if ((listOfRowsToSplitToOtherFile.size() > 0) && (listOfRowsToSplitToOtherFile[0] == rowNum)) {
+					rowStruct->writeNormal = false;
+					listOfRowsToSplitToOtherFile.pop_front();
+				}
+			}
+
+			// Add to queue
 			rowsToProcessMutex.lock();
 			rowsToProcessQueue.push_back(rowStruct);
 			rowsToProcessMutex.unlock();
 		}
 		// Update user
 		if (rowNum % outputFrequency == 0) {
-			std::cout << "Row: " << rowNum << " Waiting to Process Queue: " << procQueueSize << "\t # Rows queue Normal: " << outputNormalQueueSize << "\t # Rows queue Other: " << outputOtherQueueSize << "              \r";
+			std::cout << "Row: " << rowNum << " Waiting to Process Queue: " << procQueueSize << "  # Rows queue Normal: " << outputNormalQueueSize << "  # Rows queue Other: " << outputOtherQueueSize << "              \r";
 		}
 		++rowNum;
 	}
@@ -329,11 +346,10 @@ void ProcessRowFilterFunc(filterParamVectorType* filterInfo) {
 
 void ProcessRowPercentageFunc() {
 
-	/*processStruct* procStruct;
+	processStruct* procStruct = nullptr;
 	bool keepWorking = true;
 
 	do {
-		int keepRow = (int)false;
 		bool emptyQueue = true;
 		rowsToProcessMutex.lock();
 		if (!rowsToProcessQueue.empty()) {
@@ -347,18 +363,8 @@ void ProcessRowPercentageFunc() {
 		}
 
 		if (!emptyQueue) {
-			// Process the row for filtering
-			keepRow = (int)true;
-			if (filterInfo->size() > 0) {
-				keepRow = ProcessFilterSingleRow(&procStruct->rowData, filterInfo);
-				if (keepRow > (int)true) {
-					// something went wrong
-					delete procStruct;
-					throw std::runtime_error("Error in ProcessFilterSingleRow");
-				}
-			}
-
-			if (keepRow == (int)true) {
+			_ASSERT(procStruct != nullptr);
+			if ((procStruct != nullptr) && (procStruct->writeNormal == true)) {
 				// add to normal output queue
 				ApplyKeepRemoveCols(&procStruct->rowData);
 				globalFileOps.AddDataToOutputQueue(true, procStruct);
@@ -384,7 +390,7 @@ void ProcessRowPercentageFunc() {
 				keepWorking = false;
 			}
 		}
-	} while (keepWorking);*/
+	} while (keepWorking);
 }
 
 void ProcessOutputQueueFunc(bool isNormalOutput) {
@@ -601,4 +607,32 @@ void ApplyKeepRemoveCols(std::string* rowData) {
 		newRowData = newRowData.substr(0, newRowData.length() - 1);
 	}
 	*rowData = newRowData;
+}
+
+void GenerateListOfRowsToSplit(std::deque<long long>& listOfSplits) {
+	long long numRowsToSplit = (long long)(round(globalFileOps.inputFileRows * (1.0f - globalParams.percentageSplit)));
+	std::uniform_real_distribution<double> randomRow(1.0, (double)globalFileOps.inputFileRows - 1.0);
+
+	std::cout << "Generating List of Rows to Split\r";
+
+	while ((long long)(listOfSplits.size()) <= numRowsToSplit) {
+		
+		// add numbers to the desired size, even with possible duplicates
+		std::cout << "Adding numbers to List of Rows to Split                                                      \r";
+		while ((long long)(listOfSplits.size()) <= numRowsToSplit) {
+			long long newRowNum = (long long)(round(randomRow(randGenerator)));
+			listOfSplits.push_back(newRowNum);
+		}
+
+		// sort the random numbers
+		std::cout << "Sorting List of Rows to Split                                                      \r";
+		std::sort(listOfSplits.begin(), listOfSplits.end());
+		std::cout << "Removing duplicates in the list                                                      \r";
+		std::deque<long long>::iterator it = std::unique(listOfSplits.begin(), listOfSplits.end());
+		
+		// resize if needed
+		listOfSplits.resize(std::distance(listOfSplits.begin(), it));
+	}
+	
+	std::cout << "Finalized List of Rows to Split: " << listOfSplits.size() << std::endl;
 }

@@ -17,6 +17,7 @@ enum colOperations {
 const long defaultProcQueueLength = 1000000000l;
 const long minimumProcQueueLength = 16000000l;
 const long overheadProcQueueLength = 20000000l;
+const float defaultPctSplit = -1.0f;
 
 class CLParams
 {
@@ -38,7 +39,7 @@ public:
 	colNumberQueueType colsToModifyNums;
 	colNumberQueueType colsToModifyNumsSecond;
 	colOperations columnOperations = colNotDefined;
-	float percentageSplit = -1.0f;
+	float percentageSplit = defaultPctSplit;
 
 private:
 	void GetParamQueueBuffer(inputParamVectorType&);

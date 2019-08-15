@@ -2,6 +2,7 @@
 #include "CLParams.h"
 #include "UtilFuncs.h"
 #include <algorithm>
+#include <iostream>
 
 CLParams::CLParams()
 {
@@ -154,7 +155,12 @@ void CLParams::GetPercentageSplit(inputParamVectorType& inputParameters) {
 			percentageSplit = std::stof(splitStr);
 		}
 		catch (...) {
-			percentageSplit = -1.0f;
+			percentageSplit = defaultPctSplit;
+			return;
+		}
+		if ((percentageSplit >= 1.0f) || (percentageSplit <= 0.0f)) {
+			std::cout << "Invalid percentage split specified." << std::endl;
+			throw std::runtime_error("Mismatch requested col names to actual col names.");
 		}
 	}
 }
