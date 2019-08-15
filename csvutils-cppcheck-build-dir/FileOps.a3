@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="3295233645">
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="81" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="83" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="83" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/>  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" my-argnr="2" my-argname="rowStruct" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="92"/>
+  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" my-argnr="2" my-argname="rowStruct" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="92"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="OpenFiles" lineNumber="17"/>
+    <functiondecl functionName="CloseFiles" lineNumber="49"/>
+    <functiondecl functionName="GetQueueSize" lineNumber="64"/>
+    <functiondecl functionName="WriteHeaderRow" lineNumber="77"/>
+    <functiondecl functionName="WriteOutputRow" lineNumber="87"/>
+    <functiondecl functionName="OpenSingleFile" lineNumber="101"/>
+    <functiondecl functionName="OpenSingleFile" lineNumber="113"/>
+    <functiondecl functionName="GetTopOfQueue" lineNumber="128"/>
+    <functiondecl functionName="AddDataToOutputQueue" lineNumber="147"/>
+    <functiondecl functionName="GetRowCountFromFile" lineNumber="156"/>
+    <functioncall functionName="CloseFiles"/>
+    <functioncall functionName="FileOps"/>
+    <functioncall functionName="FindParamChar"/>
+    <functioncall functionName="OpenSingleFile"/>
+    <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="WriteOutputRow"/>
+    <functioncall functionName="bool"/>
+    <functioncall functionName="close"/>
+    <functioncall functionName="colNoChange"/>
+    <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colRemoveAsKeep"/>
+    <functioncall functionName="colRemoveAsRemove"/>
+    <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="deleteRowData"/>
+    <functioncall functionName="empty"/>
+    <functioncall functionName="eof"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="fileName"/>
+    <functioncall functionName="filename"/>
+    <functioncall functionName="flush"/>
+    <functioncall functionName="front"/>
+    <functioncall functionName="getline"/>
+    <functioncall functionName="headerProc"/>
+    <functioncall functionName="headerRow"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="in"/>
+    <functioncall functionName="inFile"/>
+    <functioncall functionName="inFileSecond"/>
+    <functioncall functionName="inputFileName"/>
+    <functioncall functionName="inputFileNameSecond"/>
+    <functioncall functionName="inputParameters"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="is_open"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="lock"/>
+    <functioncall functionName="nullptr"/>
+    <functioncall functionName="open"/>
+    <functioncall functionName="out"/>
+    <functioncall functionName="outFile"/>
+    <functioncall functionName="outFileOther"/>
+    <functioncall functionName="outputFileName"/>
+    <functioncall functionName="outputFileNameOther"/>
+    <functioncall functionName="outputNormalFileWriteMutex"/>
+    <functioncall functionName="outputOtherFileWriteMutex"/>
+    <functioncall functionName="pop_front"/>
+    <functioncall functionName="procStruct"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="readRow"/>
+    <functioncall functionName="rowsToWriteNormalMutex"/>
+    <functioncall functionName="rowsToWriteNormalQueue"/>
+    <functioncall functionName="rowsToWriteOtherMutex"/>
+    <functioncall functionName="rowsToWriteOtherQueue"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="skipHeader"/>
+    <functioncall functionName="string"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="unlock"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

@@ -1,0 +1,181 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="1985237968">
+        <error id="nullPointerRedundantCheck" severity="warning" msg="Either the condition &apos;rowStruct!=nullptr&apos; is redundant or there is possible null pointer dereference: rowStruct." verbose="Either the condition &apos;rowStruct!=nullptr&apos; is redundant or there is possible null pointer dereference: rowStruct." cwe="476">
+            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" line="230" info="Null pointer dereference"/>
+            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" line="259" info="Assuming that condition &apos;rowStruct!=nullptr&apos; is not redundant"/>
+            <symbol>rowStruct</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;lastFound&apos; is assigned a value that is never used." verbose="Variable &apos;lastFound&apos; is assigned a value that is never used." cwe="563">
+            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" line="528"/>
+            <symbol>lastFound</symbol>
+        </error>
+        <error id="unreadVariable" severity="style" msg="Variable &apos;firstOutput&apos; is assigned a value that is never used." verbose="Variable &apos;firstOutput&apos; is assigned a value that is never used." cwe="563">
+            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" line="529"/>
+            <symbol>firstOutput</symbol>
+        </error>
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:41:11" call-funcname="MainInputFileLoop" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="184" call-argexpr="isOtherOutputThreadNeeded" call-argvaluetype="0" call-argvalue="0" warning="true">
+  <path filename="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" linenr="179" info="Assuming that condition 'isOtherOutputThreadNeeded' is not redundant"/>
+</function-call>  </FileInfo>
+  <FileInfo check="Uninitialized variables">
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:42:5" my-argnr="2" my-argname="ptrFilterInfo" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="423"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="main" lineNumber="68"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="149"/>
+    <functiondecl functionName="MainInputFileLoop" lineNumber="211"/>
+    <functiondecl functionName="ProcessRowFilterFunc" lineNumber="285"/>
+    <functiondecl functionName="ProcessRowPercentageFunc" lineNumber="348"/>
+    <functiondecl functionName="ProcessOutputQueueFunc" lineNumber="397"/>
+    <functiondecl functionName="ProcessFilterSingleRow" lineNumber="420"/>
+    <functiondecl functionName="ApplyKeepRemoveCols" lineNumber="520"/>
+    <functiondecl functionName="GenerateListOfRowsToSplit" lineNumber="602"/>
+    <functioncall functionName="AddDataToOutputQueue"/>
+    <functioncall functionName="ApplyKeepRemoveCols"/>
+    <functioncall functionName="CloseFiles"/>
+    <functioncall functionName="FindASpecificCSVElement"/>
+    <functioncall functionName="GenerateListOfRowsToSplit"/>
+    <functioncall functionName="GetFilterJoinOp"/>
+    <functioncall functionName="GetFilterOperand"/>
+    <functioncall functionName="GetOperationalParams"/>
+    <functioncall functionName="GetPercentageSplit"/>
+    <functioncall functionName="GetQueueSize"/>
+    <functioncall functionName="GetRowCountFromFile"/>
+    <functioncall functionName="GetTopOfQueue"/>
+    <functioncall functionName="GiveColNumToNames"/>
+    <functioncall functionName="InitializeFilterJoinOperandsEnum"/>
+    <functioncall functionName="InitializeFilterOperandsEnum"/>
+    <functioncall functionName="Is_number"/>
+    <functioncall functionName="IterateThroughFile"/>
+    <functioncall functionName="LoadColumnNames"/>
+    <functioncall functionName="LoadFilters"/>
+    <functioncall functionName="MainInputFileLoop"/>
+    <functioncall functionName="OpenFiles"/>
+    <functioncall functionName="ParseParameters"/>
+    <functioncall functionName="ProcessFilterSingleRow"/>
+    <functioncall functionName="ProcessOutputQueueFunc"/>
+    <functioncall functionName="ProcessRowFilterFunc"/>
+    <functioncall functionName="ProcessRowPercentageFunc"/>
+    <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="WriteHeaderRow"/>
+    <functioncall functionName="WriteOutputRow"/>
+    <functioncall functionName="_ASSERT"/>
+    <functioncall functionName="append"/>
+    <functioncall functionName="argc"/>
+    <functioncall functionName="argv"/>
+    <functioncall functionName="atBufferLimit"/>
+    <functioncall functionName="begin"/>
+    <functioncall functionName="bool"/>
+    <functioncall functionName="break"/>
+    <functioncall functionName="catch"/>
+    <functioncall functionName="clear"/>
+    <functioncall functionName="colNoChange"/>
+    <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colNum"/>
+    <functioncall functionName="colRemoveAsKeep"/>
+    <functioncall functionName="colRemoveAsRemove"/>
+    <functioncall functionName="columnInfo"/>
+    <functioncall functionName="default"/>
+    <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="distance"/>
+    <functioncall functionName="double"/>
+    <functioncall functionName="empty"/>
+    <functioncall functionName="emptyQueue"/>
+    <functioncall functionName="end"/>
+    <functioncall functionName="eof"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="filterInfo"/>
+    <functioncall functionName="filterJoinOpAND"/>
+    <functioncall functionName="filterJoinOpNotDefined"/>
+    <functioncall functionName="filterJoinOpOR"/>
+    <functioncall functionName="filterJoinOperands"/>
+    <functioncall functionName="filterOpEQ"/>
+    <functioncall functionName="filterOpGE"/>
+    <functioncall functionName="filterOpGT"/>
+    <functioncall functionName="filterOpLE"/>
+    <functioncall functionName="filterOpLT"/>
+    <functioncall functionName="filterOpNE"/>
+    <functioncall functionName="filterOpNotDefined"/>
+    <functioncall functionName="filterOperands"/>
+    <functioncall functionName="find"/>
+    <functioncall functionName="finishInputs"/>
+    <functioncall functionName="finishProcThreads"/>
+    <functioncall functionName="for"/>
+    <functioncall functionName="foundComma"/>
+    <functioncall functionName="front"/>
+    <functioncall functionName="getline"/>
+    <functioncall functionName="globalParams"/>
+    <functioncall functionName="hardware_concurrency"/>
+    <functioncall functionName="headerRow"/>
+    <functioncall functionName="i"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="inFile"/>
+    <functioncall functionName="inputFileName"/>
+    <functioncall functionName="inputParameters"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="isNormalOutput"/>
+    <functioncall functionName="isOtherOutputThreadNeeded"/>
+    <functioncall functionName="is_open"/>
+    <functioncall functionName="it"/>
+    <functioncall functionName="j"/>
+    <functioncall functionName="jobToUse"/>
+    <functioncall functionName="jobType"/>
+    <functioncall functionName="jobTypeToProc"/>
+    <functioncall functionName="jobUseFilters"/>
+    <functioncall functionName="jobUsePercentage"/>
+    <functioncall functionName="jobUseUnknown"/>
+    <functioncall functionName="join"/>
+    <functioncall functionName="joinToNextFilter"/>
+    <functioncall functionName="keepRow"/>
+    <functioncall functionName="keepWorking"/>
+    <functioncall functionName="lastFound"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="listOfRowsToSplitToOtherFile"/>
+    <functioncall functionName="lock"/>
+    <functioncall functionName="long"/>
+    <functioncall functionName="mapFilterJoinOpValues"/>
+    <functioncall functionName="mapFilterOpValues"/>
+    <functioncall functionName="max"/>
+    <functioncall functionName="maxRowSize"/>
+    <functioncall functionName="milliseconds"/>
+    <functioncall functionName="newRowData"/>
+    <functioncall functionName="newRowNum"/>
+    <functioncall functionName="nextColToRemoveSpotInList"/>
+    <functioncall functionName="nullptr"/>
+    <functioncall functionName="op"/>
+    <functioncall functionName="operand"/>
+    <functioncall functionName="outputNormalQueueSize"/>
+    <functioncall functionName="outputOtherQueueSize"/>
+    <functioncall functionName="overheadThreads"/>
+    <functioncall functionName="percentageSplit"/>
+    <functioncall functionName="pop_front"/>
+    <functioncall functionName="procQueueSize"/>
+    <functioncall functionName="procStruct"/>
+    <functioncall functionName="processQueueBuffer"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="randGenerator"/>
+    <functioncall functionName="randomRow"/>
+    <functioncall functionName="resize"/>
+    <functioncall functionName="retVal"/>
+    <functioncall functionName="return"/>
+    <functioncall functionName="round"/>
+    <functioncall functionName="rowData"/>
+    <functioncall functionName="rowStruct"/>
+    <functioncall functionName="runtime_error"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="sleep_for"/>
+    <functioncall functionName="sort"/>
+    <functioncall functionName="stod"/>
+    <functioncall functionName="string"/>
+    <functioncall functionName="stringToCheck"/>
+    <functioncall functionName="substr"/>
+    <functioncall functionName="switch"/>
+    <functioncall functionName="thread"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="unique"/>
+    <functioncall functionName="unlock"/>
+    <functioncall functionName="value"/>
+    <functioncall functionName="what"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

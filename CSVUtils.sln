@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSVSplit", "CSVSplit\CSVSplit.vcxproj", "{F8DC0E16-4EF6-4ECB-81E1-DEEC75BE6991}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSVUnitTest", "CSVUnitTest\CSVUnitTest.vcxproj", "{118B5B86-9314-4354-BA9C-1B426C4AB1B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,14 @@ Global
 		{F8DC0E16-4EF6-4ECB-81E1-DEEC75BE6991}.Release|x64.Build.0 = Release|x64
 		{F8DC0E16-4EF6-4ECB-81E1-DEEC75BE6991}.Release|x86.ActiveCfg = Release|Win32
 		{F8DC0E16-4EF6-4ECB-81E1-DEEC75BE6991}.Release|x86.Build.0 = Release|Win32
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Debug|x64.ActiveCfg = Debug|x64
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Debug|x64.Build.0 = Debug|x64
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Debug|x86.ActiveCfg = Debug|Win32
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Debug|x86.Build.0 = Debug|Win32
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x64.ActiveCfg = Release|x64
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x64.Build.0 = Release|x64
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x86.ActiveCfg = Release|Win32
+		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

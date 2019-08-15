@@ -1,4 +1,4 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "FileOps.h"
 #include <fstream>
 #include <string>

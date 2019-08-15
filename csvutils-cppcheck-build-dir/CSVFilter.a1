@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="3251867700">
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="InitializeFilterOperandsEnum" lineNumber="7"/>
+    <functiondecl functionName="InitializeFilterJoinOperandsEnum" lineNumber="17"/>
+    <functiondecl functionName="LoadFilters" lineNumber="23"/>
+    <functiondecl functionName="FindFilter" lineNumber="43"/>
+    <functiondecl functionName="GetFilterOperand" lineNumber="84"/>
+    <functiondecl functionName="GetFilterJoinOp" lineNumber="87"/>
+    <functioncall functionName="FindFilter"/>
+    <functioncall functionName="colNoChange"/>
+    <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colRemoveAsKeep"/>
+    <functioncall functionName="colRemoveAsRemove"/>
+    <functioncall functionName="columnInfo"/>
+    <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="filterJoinOpAND"/>
+    <functioncall functionName="filterJoinOpNotDefined"/>
+    <functioncall functionName="filterJoinOpOR"/>
+    <functioncall functionName="filterJoinOperands"/>
+    <functioncall functionName="filterName"/>
+    <functioncall functionName="filterOpEQ"/>
+    <functioncall functionName="filterOpGE"/>
+    <functioncall functionName="filterOpGT"/>
+    <functioncall functionName="filterOpLE"/>
+    <functioncall functionName="filterOpLT"/>
+    <functioncall functionName="filterOpNE"/>
+    <functioncall functionName="filterOpNotDefined"/>
+    <functioncall functionName="filterOperands"/>
+    <functioncall functionName="i"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="inputParameters"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="j"/>
+    <functioncall functionName="joinOp"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="operand"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="thisFilter"/>
+    <functioncall functionName="to_string"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

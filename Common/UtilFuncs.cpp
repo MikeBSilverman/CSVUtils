@@ -1,8 +1,8 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <string>
 #include <algorithm>
 #include <cctype>
-
+#include <vector>
 
 // return true = more to do, false = done
 bool FindAndSplitNextCSVElement(std::string& csvRow, std::string& element)
@@ -154,6 +154,16 @@ std::string StripQuotesString(std::string& inputToClean) {
 	return StripQuotesString(toPassVal);
 }*/
 
+void LoadColumnNames(std::string headerRow, std::vector<std::string>& columnInfo) {
+	std::string colName = "";
+	bool keepAlive = true;
+
+	while (keepAlive) {
+		keepAlive = FindAndSplitNextCSVElement(headerRow, colName);
+		columnInfo.push_back(StripQuotesString(colName));
+	}
+
+}
 
 bool Is_number(const std::string& searchStr)
 {

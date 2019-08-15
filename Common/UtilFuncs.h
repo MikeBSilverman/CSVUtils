@@ -4,6 +4,7 @@
 
 bool FindAndSplitNextCSVElement(std::string&, std::string&);
 bool FindASpecificCSVElement(std::string&, int, std::string&);
+void LoadColumnNames(std::string, std::vector<std::string>&);
 
 std::string StripQuotesString(std::string&); 
 //std::string StripQuotesChar(char*);

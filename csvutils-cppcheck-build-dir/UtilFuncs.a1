@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="330246957">
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="FindAndSplitNextCSVElement" lineNumber="8"/>
+    <functiondecl functionName="FindASpecificCSVElement" lineNumber="36"/>
+    <functiondecl functionName="StripQuotesInner" lineNumber="91"/>
+    <functiondecl functionName="StripQuotesString" lineNumber="137"/>
+    <functiondecl functionName="LoadColumnNames" lineNumber="157"/>
+    <functiondecl functionName="Is_number" lineNumber="168"/>
+    <functioncall functionName="FindAndSplitNextCSVElement"/>
+    <functioncall functionName="StripQuotesInner"/>
+    <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="begin"/>
+    <functioncall functionName="chrToChk"/>
+    <functioncall functionName="colName"/>
+    <functioncall functionName="count"/>
+    <functioncall functionName="csvRow"/>
+    <functioncall functionName="empty"/>
+    <functioncall functionName="end"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="find"/>
+    <functioncall functionName="findString"/>
+    <functioncall functionName="find_if"/>
+    <functioncall functionName="for"/>
+    <functioncall functionName="found"/>
+    <functioncall functionName="foundNext"/>
+    <functioncall functionName="headerRow"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="inputToClean"/>
+    <functioncall functionName="isdigit"/>
+    <functioncall functionName="keepAlive"/>
+    <functioncall functionName="lastFound"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="retVal"/>
+    <functioncall functionName="return"/>
+    <functioncall functionName="substr"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

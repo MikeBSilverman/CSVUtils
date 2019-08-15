@@ -2,7 +2,7 @@
 // Helps filter rows of CSV files, split into filter/non-filtered, select certain columns, and more
 // By Mike Silverman
 
-#include "stdafx.h"
+//#include "stdafx.h"
 #include <string>
 #include <iostream>
 #include <vector>
@@ -36,7 +36,7 @@ static CLParams globalParams;
 static FileOps globalFileOps;
 static std::mt19937 randGenerator(std::random_device{}());
 
-void LoadColumnNames(std::string, std::vector<std::string>&);
+
 int IterateThroughFile(jobType, filterParamVectorType&);
 long long MainInputFileLoop(bool&, jobType);
 int ProcessFilterSingleRow(std::string*, filterParamVectorType*);
@@ -46,6 +46,7 @@ void ProcessOutputQueueFunc(bool);
 void ApplyKeepRemoveCols(std::string*);
 void GenerateListOfRowsToSplit(std::deque<long long>&);
 
+// Constants for program operation
 const int queueUpdateSize = 5;
 const int outputFrequency = 10000;
 
@@ -515,17 +516,6 @@ int ProcessFilterSingleRow(std::string* rowData, filterParamVectorType* ptrFilte
 	return (int)retVal;
 }
 
-
-void LoadColumnNames(std::string headerRow, std::vector<std::string>& columnInfo) {
-	std::string colName = "";
-	bool keepAlive = true;
-
-	while (keepAlive) {
-		keepAlive = FindAndSplitNextCSVElement(headerRow, colName);
-		columnInfo.push_back(StripQuotesString(colName));
-	}
-
-}
 
 void ApplyKeepRemoveCols(std::string* rowData) {
 	// Check if there's anything to do

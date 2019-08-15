@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="2473127406">
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.h:30:14" call-funcname="FindParamChar" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.cpp" linenr="63" call-argexpr="0" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.h:30:14" call-funcname="FindParamChar" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.cpp" linenr="68" call-argexpr="0" call-argvaluetype="0" call-argvalue="0"/>  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="ParseParameters" lineNumber="15"/>
+    <functiondecl functionName="GetOperationalParams" lineNumber="36"/>
+    <functiondecl functionName="GetParamQueueBuffer" lineNumber="43"/>
+    <functiondecl functionName="GetColsToKeepOrDrop" lineNumber="59"/>
+    <functiondecl functionName="FindParamString" lineNumber="95"/>
+    <functiondecl functionName="FindParamChar" lineNumber="99"/>
+    <functiondecl functionName="GiveColNumToNames" lineNumber="119"/>
+    <functiondecl functionName="GetPercentageSplit" lineNumber="151"/>
+    <functioncall functionName="CLParams"/>
+    <functioncall functionName="FindParamChar"/>
+    <functioncall functionName="FindParamString"/>
+    <functioncall functionName="GetColsToKeepOrDrop"/>
+    <functioncall functionName="GetParamQueueBuffer"/>
+    <functioncall functionName="Is_number"/>
+    <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="append"/>
+    <functioncall functionName="begin"/>
+    <functioncall functionName="bufferLength"/>
+    <functioncall functionName="c_str"/>
+    <functioncall functionName="catch"/>
+    <functioncall functionName="colNoChange"/>
+    <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colRemoveAsKeep"/>
+    <functioncall functionName="colRemoveAsRemove"/>
+    <functioncall functionName="colToModifyRemaining"/>
+    <functioncall functionName="colsToModifyNames"/>
+    <functioncall functionName="colsToModifyNamesSecond"/>
+    <functioncall functionName="colsToModifyNums"/>
+    <functioncall functionName="colsToModifyNumsSecond"/>
+    <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="defaultProcQueueLength"/>
+    <functioncall functionName="end"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="field"/>
+    <functioncall functionName="foundMatch"/>
+    <functioncall functionName="i"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="innerParamToAdd"/>
+    <functioncall functionName="inputParameters"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="keepLoop"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="minimumProcQueueLength"/>
+    <functioncall functionName="nextCol"/>
+    <functioncall functionName="offset"/>
+    <functioncall functionName="paramToAdd"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="push_front"/>
+    <functioncall functionName="return"/>
+    <functioncall functionName="runtime_error"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="sort"/>
+    <functioncall functionName="splitStr"/>
+    <functioncall functionName="stof"/>
+    <functioncall functionName="stol"/>
+    <functioncall functionName="string"/>
+    <functioncall functionName="strlen"/>
+    <functioncall functionName="thisColNumber"/>
+    <functioncall functionName="to_string"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>
