@@ -97,6 +97,19 @@ void FileOps::WriteOutputRow(bool isNormalOutput, processStruct* rowStruct, bool
 		delete rowStruct;
 	}
 }
+void FileOps::WriteOutputRow(bool isNormalOutput, std::string* rowData, bool deleteRowData) {
+	std::ofstream* thisOutfile = (isNormalOutput ? &outFile : &outFileOther);
+	std::mutex* thisMutex = (isNormalOutput ? &outputNormalFileWriteMutex : &outputOtherFileWriteMutex);
+
+	thisMutex->lock();
+	*thisOutfile << *rowData << std::endl;
+	thisOutfile->flush();
+	thisMutex->unlock();
+
+	if (deleteRowData) {
+		delete rowData;
+	}
+}
 
 bool FileOps::OpenSingleFile(std::string& fileName, std::ifstream& inFile) {
 	if (fileName.length() > 0) {

@@ -1,57 +1,85 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="2673503790">
-        <error id="nullPointerRedundantCheck" severity="warning" msg="Either the condition &apos;rowStruct!=nullptr&apos; is redundant or there is possible null pointer dereference: rowStruct." verbose="Either the condition &apos;rowStruct!=nullptr&apos; is redundant or there is possible null pointer dereference: rowStruct." cwe="476">
-            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" line="159" info="Null pointer dereference"/>
-            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" line="182" info="Assuming that condition &apos;rowStruct!=nullptr&apos; is not redundant"/>
-            <symbol>rowStruct</symbol>
-        </error>
-        <error id="unusedStructMember" severity="style" msg="struct member &apos;columnStatistics::doesColumnEqualLabel&apos; is never used." verbose="struct member &apos;columnStatistics::doesColumnEqualLabel&apos; is never used." cwe="563">
-            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" line="37"/>
-            <symbol>columnStatistics::doesColumnEqualLabel</symbol>
-        </error>
-        <error id="unusedVariable" severity="style" msg="Unused variable: listOfRowsToSplitToOtherFile" verbose="Unused variable: listOfRowsToSplitToOtherFile" cwe="563">
-            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" line="148"/>
-            <symbol>listOfRowsToSplitToOtherFile</symbol>
-        </error>
+<analyzerinfo checksum="2586417948">
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" call-funcname="GetTheLabelForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="283" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:27:6" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:47:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="336" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" my-argnr="1"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:50:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="392"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:51:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="407"/>
+  </FileInfo>
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="51"/>
-    <functiondecl functionName="IterateThroughFile" lineNumber="107"/>
-    <functiondecl functionName="MainInputFileLoop" lineNumber="145"/>
-    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="197"/>
-    <functiondecl functionName="AnalyzeThisRow" lineNumber="234"/>
-    <functiondecl functionName="OutputStatistics" lineNumber="237"/>
+    <functiondecl functionName="main" lineNumber="64"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="147"/>
+    <functiondecl functionName="MainInputFileLoop" lineNumber="185"/>
+    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="236"/>
+    <functiondecl functionName="AnalyzeThisRow" lineNumber="273"/>
+    <functiondecl functionName="OutputStatistics" lineNumber="304"/>
+    <functiondecl functionName="GetTheLabelForThisRow" lineNumber="328"/>
+    <functiondecl functionName="GetNextCommasInRow" lineNumber="349"/>
+    <functiondecl functionName="GetThisValueFromRow" lineNumber="360"/>
+    <functiondecl functionName="AddStatsForThisColumn" lineNumber="374"/>
+    <functiondecl functionName="AddStatsUniqueVal" lineNumber="391"/>
+    <functiondecl functionName="AddStatsColToLabel" lineNumber="405"/>
+    <functiondecl functionName="OutputStatsColMatchLabel" lineNumber="432"/>
+    <functiondecl functionName="OutputStatsColWithOnlyOneValue" lineNumber="443"/>
+    <functiondecl functionName="OutputStatsCheckSplitForUniqueValues" lineNumber="454"/>
+    <functiondecl functionName="OutputStatsWriteSingleLine" lineNumber="499"/>
+    <functioncall functionName="AddStatsColToLabel"/>
+    <functioncall functionName="AddStatsForThisColumn"/>
+    <functioncall functionName="AddStatsUniqueVal"/>
     <functioncall functionName="AnalyzeThisRow"/>
     <functioncall functionName="CloseFiles"/>
-    <functioncall functionName="FindParamString"/>
+    <functioncall functionName="FindParamChar"/>
+    <functioncall functionName="GetNextCommasInRow"/>
     <functioncall functionName="GetOperationalParams"/>
+    <functioncall functionName="GetTheLabelForThisRow"/>
+    <functioncall functionName="GetThisValueFromRow"/>
     <functioncall functionName="IterateThroughFile"/>
     <functioncall functionName="LoadColumnNames"/>
     <functioncall functionName="MainInputFileLoop"/>
     <functioncall functionName="OpenFiles"/>
     <functioncall functionName="OutputStatistics"/>
+    <functioncall functionName="OutputStatsCheckSplitForUniqueValues"/>
+    <functioncall functionName="OutputStatsColMatchLabel"/>
+    <functioncall functionName="OutputStatsColWithOnlyOneValue"/>
+    <functioncall functionName="OutputStatsWriteSingleLine"/>
     <functioncall functionName="ParseParameters"/>
     <functioncall functionName="ProcessRowStatsFunc"/>
     <functioncall functionName="StripQuotesString"/>
-    <functioncall functionName="WriteHeaderRow"/>
+    <functioncall functionName="V"/>
+    <functioncall functionName="WriteOutputRow"/>
     <functioncall functionName="_ASSERT"/>
+    <functioncall functionName="append"/>
     <functioncall functionName="argc"/>
     <functioncall functionName="argv"/>
     <functioncall functionName="atBufferLimit"/>
+    <functioncall functionName="begin"/>
     <functioncall functionName="bool"/>
     <functioncall functionName="catch"/>
     <functioncall functionName="clear"/>
+    <functioncall functionName="col"/>
     <functioncall functionName="colNoChange"/>
     <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colNum"/>
+    <functioncall functionName="colNumInRow"/>
     <functioncall functionName="colRemoveAsKeep"/>
     <functioncall functionName="colRemoveAsRemove"/>
     <functioncall functionName="columnInfo"/>
     <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="doesColumnEqualLabel"/>
     <functioncall functionName="empty"/>
     <functioncall functionName="emptyQueue"/>
+    <functioncall functionName="end"/>
     <functioncall functionName="eof"/>
     <functioncall functionName="false"/>
+    <functioncall functionName="find"/>
+    <functioncall functionName="find_if"/>
     <functioncall functionName="finishInputs"/>
+    <functioncall functionName="first"/>
+    <functioncall functionName="firstString"/>
     <functioncall functionName="for"/>
+    <functioncall functionName="foundComma"/>
     <functioncall functionName="front"/>
     <functioncall functionName="getline"/>
     <functioncall functionName="globalParams"/>
@@ -63,29 +91,48 @@
     <functioncall functionName="inputParameters"/>
     <functioncall functionName="int"/>
     <functioncall functionName="is_open"/>
+    <functioncall functionName="iterCount"/>
     <functioncall functionName="join"/>
     <functioncall functionName="keepWorking"/>
-    <functioncall functionName="labelColName"/>
+    <functioncall functionName="labelColNum"/>
+    <functioncall functionName="lastFound"/>
     <functioncall functionName="length"/>
     <functioncall functionName="lock"/>
     <functioncall functionName="long"/>
+    <functioncall functionName="map_second_value_equals"/>
     <functioncall functionName="max"/>
     <functioncall functionName="maxRowSize"/>
+    <functioncall functionName="maxWatermark"/>
+    <functioncall functionName="maxWatermarkVal"/>
     <functioncall functionName="milliseconds"/>
+    <functioncall functionName="msgToOutput"/>
+    <functioncall functionName="newValue"/>
     <functioncall functionName="nullptr"/>
+    <functioncall functionName="numUniqueChk"/>
+    <functioncall functionName="outputComplex"/>
+    <functioncall functionName="outputData"/>
     <functioncall functionName="overheadThreads"/>
     <functioncall functionName="pop_front"/>
     <functioncall functionName="procQueueSize"/>
     <functioncall functionName="processQueueBuffer"/>
     <functioncall functionName="push_back"/>
+    <functioncall functionName="resize"/>
     <functioncall functionName="rowData"/>
     <functioncall functionName="rowStruct"/>
+    <functioncall functionName="runtime_error"/>
+    <functioncall functionName="second"/>
     <functioncall functionName="size"/>
     <functioncall functionName="sleep_for"/>
     <functioncall functionName="string"/>
+    <functioncall functionName="substr"/>
+    <functioncall functionName="thisColStats"/>
+    <functioncall functionName="thisRowLabel"/>
     <functioncall functionName="thread"/>
+    <functioncall functionName="to_string"/>
     <functioncall functionName="true"/>
     <functioncall functionName="unlock"/>
+    <functioncall functionName="v"/>
+    <functioncall functionName="value"/>
     <functioncall functionName="what"/>
     <functioncall functionName="while"/>
   </FileInfo>

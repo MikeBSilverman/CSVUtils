@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <results version="2">
     <cppcheck version="1.87"/>
-    <errors>
-        <error id="nullPointerRedundantCheck" severity="warning" msg="Either the condition &amp;#039;rowStruct!=nullptr&amp;#039; is redundant or there is possible null pointer dereference: rowStruct." verbose="Either the condition &amp;#039;rowStruct!=nullptr&amp;#039; is redundant or there is possible null pointer dereference: rowStruct." sinceDate="8/15/2019">
-            <location file="CSVSplit\CSVSplit.cpp" line="259" info="Assuming that condition &amp;#039;rowStruct!=nullptr&amp;#039; is not redundant"/>
-            <location file="CSVSplit\CSVSplit.cpp" line="230" info="Null pointer dereference"/>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &amp;#039;lastFound&amp;#039; is assigned a value that is never used." verbose="Variable &amp;#039;lastFound&amp;#039; is assigned a value that is never used." sinceDate="8/15/2019">
-            <location file="CSVSplit\CSVSplit.cpp" line="528"/>
-        </error>
-        <error id="unreadVariable" severity="style" msg="Variable &amp;#039;firstOutput&amp;#039; is assigned a value that is never used." verbose="Variable &amp;#039;firstOutput&amp;#039; is assigned a value that is never used." sinceDate="8/15/2019">
-            <location file="CSVSplit\CSVSplit.cpp" line="529"/>
-        </error>
-        <error id="nullPointerRedundantCheck" severity="warning" msg="Either the condition &amp;#039;rowStruct!=nullptr&amp;#039; is redundant or there is possible null pointer dereference: rowStruct." verbose="Either the condition &amp;#039;rowStruct!=nullptr&amp;#039; is redundant or there is possible null pointer dereference: rowStruct." sinceDate="8/15/2019">
-            <location file="CSVUnitTest\CSVUnitTest.cpp" line="159" info="Null pointer dereference"/>
-            <location file="CSVUnitTest\CSVUnitTest.cpp" line="182" info="Assuming that condition &amp;#039;rowStruct!=nullptr&amp;#039; is not redundant"/>
-        </error>
-        <error id="unusedStructMember" severity="style" msg="struct member &amp;#039;columnStatistics::doesColumnEqualLabel&amp;#039; is never used." verbose="struct member &amp;#039;columnStatistics::doesColumnEqualLabel&amp;#039; is never used." sinceDate="8/15/2019">
-            <location file="CSVUnitTest\CSVUnitTest.cpp" line="37"/>
-        </error>
-        <error id="unusedVariable" severity="style" msg="Unused variable: listOfRowsToSplitToOtherFile" verbose="Unused variable: listOfRowsToSplitToOtherFile" sinceDate="8/15/2019">
-            <location file="CSVUnitTest\CSVUnitTest.cpp" line="148"/>
-        </error>
-    </errors>
+    <errors/>
 </results>

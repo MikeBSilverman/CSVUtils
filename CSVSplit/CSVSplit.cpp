@@ -256,7 +256,7 @@ long long MainInputFileLoop(bool& isOtherOutputThreadNeeded, jobType jobTypeToPr
 		}
 
 		// add to queue for processing
-		if ((rowStruct != nullptr) && (rowStruct->rowData.length() > 0)) {
+		if (rowStruct->rowData.length() > 0) {
 			// check if a percentage split job
 			//rowStruct->writeNormal = true;  // set to true by default
 
@@ -525,8 +525,7 @@ void ApplyKeepRemoveCols(std::string* rowData) {
 
 	std::string newRowData = "";
 	size_t foundComma = 0;
-	size_t lastFound = 0;
-	bool firstOutput = true;
+	size_t lastFound;
 	unsigned int colNumInRow = 0;
 	unsigned int nextColToRemoveSpotInList = 0;
 

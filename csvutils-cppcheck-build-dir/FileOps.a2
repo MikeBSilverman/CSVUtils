@@ -1,12 +1,14 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="1263507677">
+<analyzerinfo checksum="3904310579">
   <FileInfo check="ctu">
 <function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="81" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="83" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" call-funcname="WriteOutputRow" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="83" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/>  </FileInfo>
   <FileInfo check="Null pointer">
     <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" my-argnr="2" my-argname="rowStruct" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="92"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:23:7" my-argnr="2" my-argname="rowData" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="105"/>
   </FileInfo>
   <FileInfo check="Uninitialized variables">
     <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:22:7" my-argnr="2" my-argname="rowStruct" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="92"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.h:23:7" my-argnr="2" my-argname="rowData" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/FileOps.cpp" linenr="105"/>
   </FileInfo>
   <FileInfo check="CheckUnusedFunctions">
     <functiondecl functionName="OpenFiles" lineNumber="17"/>
@@ -14,16 +16,18 @@
     <functiondecl functionName="GetQueueSize" lineNumber="64"/>
     <functiondecl functionName="WriteHeaderRow" lineNumber="77"/>
     <functiondecl functionName="WriteOutputRow" lineNumber="87"/>
-    <functiondecl functionName="OpenSingleFile" lineNumber="101"/>
-    <functiondecl functionName="OpenSingleFile" lineNumber="113"/>
-    <functiondecl functionName="GetTopOfQueue" lineNumber="128"/>
-    <functiondecl functionName="AddDataToOutputQueue" lineNumber="147"/>
-    <functiondecl functionName="GetRowCountFromFile" lineNumber="156"/>
+    <functiondecl functionName="WriteOutputRow" lineNumber="100"/>
+    <functiondecl functionName="OpenSingleFile" lineNumber="114"/>
+    <functiondecl functionName="OpenSingleFile" lineNumber="126"/>
+    <functiondecl functionName="GetTopOfQueue" lineNumber="141"/>
+    <functiondecl functionName="AddDataToOutputQueue" lineNumber="160"/>
+    <functiondecl functionName="GetRowCountFromFile" lineNumber="169"/>
     <functioncall functionName="CloseFiles"/>
     <functioncall functionName="FileOps"/>
     <functioncall functionName="FindParamChar"/>
     <functioncall functionName="OpenSingleFile"/>
     <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="V"/>
     <functioncall functionName="WriteOutputRow"/>
     <functioncall functionName="bool"/>
     <functioncall functionName="close"/>
@@ -76,6 +80,8 @@
     <functioncall functionName="string"/>
     <functioncall functionName="true"/>
     <functioncall functionName="unlock"/>
+    <functioncall functionName="v"/>
+    <functioncall functionName="value"/>
     <functioncall functionName="while"/>
   </FileInfo>
 </analyzerinfo>

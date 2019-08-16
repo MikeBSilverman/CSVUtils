@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="3058997102">
+<analyzerinfo checksum="329589334">
   <FileInfo check="ctu">
 <function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.h:30:14" call-funcname="FindParamChar" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.cpp" linenr="63" call-argexpr="0" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.h:30:14" call-funcname="FindParamChar" call-argnr="3" filename="C:/Users/mikeb/source/repos/CSVUtils/Common/CLParams.cpp" linenr="68" call-argexpr="0" call-argvaluetype="0" call-argvalue="0"/>  </FileInfo>
   <FileInfo check="CheckUnusedFunctions">
@@ -18,6 +18,7 @@
     <functioncall functionName="GetParamQueueBuffer"/>
     <functioncall functionName="Is_number"/>
     <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="V"/>
     <functioncall functionName="append"/>
     <functioncall functionName="begin"/>
     <functioncall functionName="bufferLength"/>
@@ -63,6 +64,8 @@
     <functioncall functionName="thisColNumber"/>
     <functioncall functionName="to_string"/>
     <functioncall functionName="true"/>
+    <functioncall functionName="v"/>
+    <functioncall functionName="value"/>
     <functioncall functionName="while"/>
   </FileInfo>
 </analyzerinfo>

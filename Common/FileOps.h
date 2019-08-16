@@ -20,6 +20,7 @@ public:
 	int OpenFiles(inputParamVectorType&, CLParams&, bool = false);
 	void WriteHeaderRow(std::string&);
 	void WriteOutputRow(bool, processStruct*, bool = true);
+	void WriteOutputRow(bool, std::string*, bool = true);
 	void CloseFiles();
 	size_t GetQueueSize(bool);
 	processStruct* GetTopOfQueue(bool);

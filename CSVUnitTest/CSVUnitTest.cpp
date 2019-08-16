@@ -24,8 +24,8 @@ static std::mutex rowsToProcessMutex;
 long long MainInputFileLoop();
 int IterateThroughFile();
 void ProcessRowStatsFunc();
-void AnalyzeThisRow(std::string&);
-void OutputStatistics();
+void AnalyzeThisRow(std::string*);
+
 
 // Constants for program operation
 const int queueUpdateSize = 5;
@@ -37,11 +37,24 @@ struct columnStatistics {
 	bool doesColumnEqualLabel = true;
 	std::map<std::string, std::string> mappingThisColToLabel;
 };
-
 long labelColNum = -1l;
 std::vector<std::string> columnInfo;
-std::vector<columnStatistics>* statisticsTable;
+std::vector<columnStatistics> statisticsTable;
+std::mutex* statisticsTableMutex;
+const float thresholdForIssueWithUniqueValCount = .5f; // .5 = 50% increase over one another
 
+std::string GetThisValueFromRow(std::string*, size_t&, size_t&, bool);
+void GetNextCommasInRow(std::string*, size_t&, size_t&);
+std::string GetTheLabelForThisRow(std::string*);
+void AddStatsForThisColumn(long&, std::string&, std::string&);
+void AddStatsUniqueVal(columnStatistics*, std::string&);
+void AddStatsColToLabel(columnStatistics*, std::string&, std::string&);
+
+void OutputStatistics();
+long long OutputStatsColMatchLabel();
+long long OutputStatsColWithOnlyOneValue();
+long long OutputStatsCheckSplitForUniqueValues(size_t);
+void OutputStatsWriteSingleLine(size_t, std::string);
 
 // CSVSplit.exe parameters
 // -inputf "file name of data to analyze" (Required)
@@ -86,7 +99,7 @@ int main(int argc, char* argv[])
 	}
 
 	std::string labelColName;
-	globalParams.FindParamString(labelColName, inputParameters, 1); // Ok if blank
+	labelColName = globalParams.FindParamChar("-labelCol", inputParameters, 1); // Ok if blank
 	if (labelColName.size() > 0) {
 		labelColNum = 0;
 		while ((labelColNum < (long)columnInfo.size()) && (columnInfo[labelColNum] != labelColName)) {
@@ -101,12 +114,21 @@ int main(int argc, char* argv[])
 	if (err == 0) {
 		// Kick off main loop
 		try {
-			statisticsTable = new std::vector<columnStatistics>[columnInfo.size()];
-			globalFileOps.WriteHeaderRow(headerRow);
+			// see stats table with blanks
+			statisticsTable.resize(columnInfo.size());
+			if (labelColNum >= 0) {
+				statisticsTable[labelColNum].doesColumnEqualLabel = false; // don't do analysis on the label column!
+			}
+			statisticsTableMutex = new std::mutex[columnInfo.size()];
+
+			// Loop through the file, collecting stats along the way
 			IterateThroughFile();
 
+			// Output the analysis
 			OutputStatistics();
-			delete[] statisticsTable;
+
+			// Cleanup
+			delete[] statisticsTableMutex;
 		}
 		catch (std::exception& e) {
 			std::cerr << std::endl << "Exception encountered.  Terminating before end of input file: " << e.what() << std::endl;
@@ -196,7 +218,7 @@ long long MainInputFileLoop() {
 		}
 
 		// add to queue for processing
-		if ((rowStruct != nullptr) && (rowStruct->rowData.length() > 0)) {
+		if (rowStruct->rowData.length() > 0) {
 			// Add to queue
 			rowsToProcessMutex.lock();
 			rowsToProcessQueue.push_back(rowStruct);
@@ -232,7 +254,7 @@ void ProcessRowStatsFunc() {
 			_ASSERT(procStruct != nullptr);
 			
 			// Do analysis
-			AnalyzeThisRow(procStruct->rowData);
+			AnalyzeThisRow(&(procStruct->rowData));
 			
 			delete procStruct;
 			procStruct = nullptr;
@@ -248,11 +270,234 @@ void ProcessRowStatsFunc() {
 	} while (keepWorking);
 }
 
-void AnalyzeThisRow(std::string& rowData) {
-	
+void AnalyzeThisRow(std::string* rowData) {
+
+	std::string newValue;
+	std::string thisRowLabel;
+
+	size_t foundComma = 0;
+	size_t lastFound = 0;
+	long colNumInRow = 0;
+
+	// Get the label for this row
+	thisRowLabel = GetTheLabelForThisRow(rowData);
+	// Load all 
+
+	while (colNumInRow < columnInfo.size()) {
+		// find next comma
+		GetNextCommasInRow(rowData, foundComma, lastFound);
+		if ((foundComma == std::string::npos) && (colNumInRow < (columnInfo.size() - 1))) {
+			// ruh roh! reached end of line somehow before we're ready...
+			throw std::runtime_error("Error when stripping commas from row data.");
+		}
+
+		// Get the value
+		newValue = GetThisValueFromRow(rowData, foundComma, lastFound, colNumInRow == 0);
+		
+		AddStatsForThisColumn(colNumInRow, thisRowLabel, newValue);
+
+		++colNumInRow;
+	}
 }
 
 
 void OutputStatistics() {
 
+	long long results;
+	std::cout << std::endl;
+
+	// Check for col matching label 1:1
+	if (labelColNum >= 0) {
+		results = OutputStatsColMatchLabel();
+		std::cout << "Checking for columns where it matched 1:1 with the label column found " << results << " issues." << std::endl;
+	}
+
+	// Check if any columns have only one value (likely an error, or just not needed)
+	results = OutputStatsColWithOnlyOneValue();
+	std::cout << "Checking for columns with only one value found " << results << " issues." << std::endl;
+
+	// May or may not be an issue, but good to check (male vs. female might be a problem, while a one-hot encode may not be an issue)
+	results = OutputStatsCheckSplitForUniqueValues(2);
+	std::cout << "Checking for columns with two unique values found " << results << " times where the ratio is quite poor." << std::endl;
+
+	// May or may not be an issue, but good to check (male vs. female might be a problem, while a one-hot encode may not be an issue)
+	results = OutputStatsCheckSplitForUniqueValues(3);
+	std::cout << "Checking for columns with three unique values found " << results << " times where the ratio is quite poor." << std::endl;
+}
+
+std::string GetTheLabelForThisRow(std::string* rowData) {
+	size_t foundComma = 0;
+	size_t lastFound = 0;
+	long colNumInRow = -1l;
+
+	// Cycle through commas until we find the desired column
+	do {
+		// find next comma
+		GetNextCommasInRow(rowData, foundComma, lastFound);
+		if ((foundComma == std::string::npos) && (colNumInRow < (columnInfo.size() - 1))) {
+			// ruh roh! reached end of line somehow before we're ready...
+			throw std::runtime_error("Error when stripping commas from row data.");
+		}
+		++colNumInRow;
+	} while (colNumInRow < labelColNum);
+
+	// Get the value
+	return GetThisValueFromRow(rowData, foundComma, lastFound, colNumInRow == 0);
+
+}
+
+void GetNextCommasInRow(std::string* rowData, size_t& foundComma, size_t& lastFound) {
+	if (foundComma == 0) {
+		foundComma = rowData->find(","); // find first ,
+		lastFound = 0;
+	}
+	else {
+		lastFound = foundComma;
+		foundComma = rowData->find(",", foundComma + 1); // find the next , from the char after the last found one
+	}
+}
+// Get the value from this part of the row
+std::string GetThisValueFromRow(std::string* rowData, size_t& foundComma, size_t& lastFound, bool firstString) {
+	if (foundComma == std::string::npos) {
+		return rowData->substr(lastFound + 1);
+	}
+	else {
+		if (firstString) {
+			return rowData->substr(lastFound, (foundComma - lastFound));
+		}
+		else {
+			return rowData->substr(lastFound + 1, (foundComma - lastFound) - 1);
+		}
+	}
+}
+
+void AddStatsForThisColumn(long& colNumInRow, std::string& thisRowLabel, std::string& newValue) {
+
+	statisticsTableMutex[colNumInRow].lock();
+	columnStatistics* thisColStats = &(statisticsTable[colNumInRow]);
+
+	// add if a unique value
+	AddStatsUniqueVal(thisColStats, newValue);
+
+	// check if the label column and this column are in lockstep
+	if ((labelColNum >= 0) && (thisColStats->doesColumnEqualLabel)) {
+		AddStatsColToLabel(thisColStats, thisRowLabel, newValue);
+	}
+	
+		statisticsTableMutex[colNumInRow].unlock();
+	
+}
+
+void AddStatsUniqueVal(columnStatistics* thisColStats, std::string& newValue) {
+	std::map<std::string, long long>::iterator itUV = thisColStats->uniqueValues.find(newValue);
+
+	// is the value in the table already?
+	if (itUV == thisColStats->uniqueValues.end()) {
+		// no, add this value
+		thisColStats->uniqueValues[newValue] = 1l;
+	}
+	else {
+		// increment # times we've seen this value
+		++itUV->second;
+	}
+}
+
+void AddStatsColToLabel(columnStatistics* thisColStats, std::string& thisRowLabel, std::string& newValue) {
+	// have we already come across this label before
+	std::map<std::string, std::string>::iterator itCL = std::find_if(thisColStats->mappingThisColToLabel.begin(), thisColStats->mappingThisColToLabel.end(),
+		map_second_value_equals<std::string, std::string>(thisRowLabel));
+	if (itCL != thisColStats->mappingThisColToLabel.end()) {
+		// we've seen this label before, check if the newValue is consistent
+		if (itCL->first != newValue) {
+			// no, it's the same value/label paring, and call off the search
+			thisColStats->doesColumnEqualLabel = false;
+		}
+	}
+	else {
+		// ok, this label hasn't been found yet.  Have we seen this newVal though?
+		itCL = thisColStats->mappingThisColToLabel.find(newValue);
+		
+		if (itCL != thisColStats->mappingThisColToLabel.end()) {
+			// yes, we've seen this value, and it doesn't map to the previous label we found
+			// call off the search
+			thisColStats->doesColumnEqualLabel = false;
+		}
+		else {
+			// we've never seen this value/label pair, and add
+			thisColStats->mappingThisColToLabel[newValue] = thisRowLabel;
+		}
+	}
+}
+
+long long OutputStatsColMatchLabel() {
+	long long instances = 0; 
+	for (size_t col = 0; col < statisticsTable.size(); ++col) {
+		if (statisticsTable[col].doesColumnEqualLabel) {
+			OutputStatsWriteSingleLine(col, " is in lock step with the label column!");
+			++instances;
+		}
+	}
+	return instances;
+}
+
+long long OutputStatsColWithOnlyOneValue() {
+	long long instances = 0;
+	for (size_t col = 0; col < statisticsTable.size(); ++col) {
+		if (statisticsTable[col].uniqueValues.size() == 1) {
+			OutputStatsWriteSingleLine(col, " has only one value!");
+			++instances;
+		}
+	}
+	return instances;
+}
+
+long long OutputStatsCheckSplitForUniqueValues(size_t numUniqueChk) {
+	long long instances = 0;
+	for (size_t col = 0; col < statisticsTable.size(); ++col) {
+		if (statisticsTable[col].uniqueValues.size() == numUniqueChk) {
+			// step through the list of unique vals and compare
+			long long maxWatermark = 0l;
+			std::string maxWatermarkVal;
+			std::map<std::string, long long>::iterator* iters = new std::map<std::string, long long>::iterator[numUniqueChk];
+
+			for (size_t iterCount = 0; iterCount < numUniqueChk; ++iterCount) {
+				iters[iterCount] = statisticsTable[col].uniqueValues.begin();
+				size_t i = 0;
+				while (i < iterCount) {
+					++iters[iterCount];
+					++i;
+				}
+
+				// see if a new high value
+				maxWatermark = std::max(maxWatermark, iters[iterCount]->second);
+				if (maxWatermark == iters[iterCount]->second) {
+					maxWatermarkVal = iters[iterCount]->first;
+				}
+			}
+			
+			for (size_t iterCount = 0; iterCount < numUniqueChk; ++iterCount) {
+				if ((iters[iterCount]->second * (thresholdForIssueWithUniqueValCount + 1.0f)) < maxWatermark) {
+					std::string outputComplex = " unique value '";
+					outputComplex.append(iters[iterCount]->first);
+					outputComplex.append("' is below threshold: ");
+					outputComplex.append(std::to_string(iters[iterCount]->second));
+					outputComplex.append(" vs. ");
+					outputComplex.append(std::to_string(maxWatermark));
+					outputComplex.append(" times seeing '");
+					outputComplex.append(maxWatermarkVal);
+					outputComplex.append("'");
+					OutputStatsWriteSingleLine(col, outputComplex);
+					++instances;
+				}
+			}
+			delete[] iters;
+		}
+	}
+	return instances;
+}
+
+void OutputStatsWriteSingleLine(size_t colNum, std::string msgToOutput) {
+	std::string outputData = columnInfo[colNum];
+	outputData.append(msgToOutput);
+	globalFileOps.WriteOutputRow(true, &outputData, false);
 }
