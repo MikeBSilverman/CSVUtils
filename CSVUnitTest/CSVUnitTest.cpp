@@ -228,7 +228,7 @@ long long MainInputFileLoop() {
 		}
 		// Update user
 		if (rowNum % outputFrequency == 0) {
-			std::cout << "Row: " << rowNum << " Waiting to Process Queue: " << procQueueSize << "              \r";
+			std::cout << "Row: " << rowNum << "\tWaiting to Process Queue: " << procQueueSize << "              \r";
 		}
 		++rowNum;
 	}
