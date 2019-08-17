@@ -1,30 +1,31 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="3682384985">
+<analyzerinfo checksum="3591574551">
   <FileInfo check="ctu">
-<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" call-funcname="GetTheLabelForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="283" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:27:6" my-argnr="1"/>
-<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:47:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="336" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:49:13" call-funcname="GetTheLabelForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="285" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:28:6" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="340" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:49:13" my-argnr="1"/>
   </FileInfo>
   <FileInfo check="Null pointer">
-    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:50:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="392"/>
-    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:51:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="407"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:51:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="396"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:52:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="411"/>
   </FileInfo>
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="64"/>
-    <functiondecl functionName="IterateThroughFile" lineNumber="147"/>
-    <functiondecl functionName="MainInputFileLoop" lineNumber="185"/>
-    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="236"/>
-    <functiondecl functionName="AnalyzeThisRow" lineNumber="273"/>
-    <functiondecl functionName="OutputStatistics" lineNumber="304"/>
-    <functiondecl functionName="GetTheLabelForThisRow" lineNumber="328"/>
-    <functiondecl functionName="GetNextCommasInRow" lineNumber="349"/>
-    <functiondecl functionName="GetThisValueFromRow" lineNumber="360"/>
-    <functiondecl functionName="AddStatsForThisColumn" lineNumber="374"/>
-    <functiondecl functionName="AddStatsUniqueVal" lineNumber="391"/>
-    <functiondecl functionName="AddStatsColToLabel" lineNumber="405"/>
-    <functiondecl functionName="OutputStatsColMatchLabel" lineNumber="432"/>
-    <functiondecl functionName="OutputStatsColWithOnlyOneValue" lineNumber="443"/>
-    <functiondecl functionName="OutputStatsCheckSplitForUniqueValues" lineNumber="454"/>
-    <functiondecl functionName="OutputStatsWriteSingleLine" lineNumber="499"/>
+    <functiondecl functionName="main" lineNumber="66"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="149"/>
+    <functiondecl functionName="MainInputFileLoop" lineNumber="187"/>
+    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="238"/>
+    <functiondecl functionName="AnalyzeThisRow" lineNumber="275"/>
+    <functiondecl functionName="OutputStatistics" lineNumber="306"/>
+    <functiondecl functionName="GetTheLabelForThisRow" lineNumber="332"/>
+    <functiondecl functionName="GetNextCommasInRow" lineNumber="353"/>
+    <functiondecl functionName="GetThisValueFromRow" lineNumber="364"/>
+    <functiondecl functionName="AddStatsForThisColumn" lineNumber="378"/>
+    <functiondecl functionName="AddStatsUniqueVal" lineNumber="395"/>
+    <functiondecl functionName="AddStatsColToLabel" lineNumber="409"/>
+    <functiondecl functionName="OutputStatsColMatchLabel" lineNumber="436"/>
+    <functiondecl functionName="OutputStatsColWithOnlyOneValue" lineNumber="447"/>
+    <functiondecl functionName="OutputStatsCheckSplitForUniqueValues" lineNumber="458"/>
+    <functiondecl functionName="OutputUniqueStats" lineNumber="503"/>
+    <functiondecl functionName="OutputStatsWriteSingleLine" lineNumber="526"/>
     <functioncall functionName="AddStatsColToLabel"/>
     <functioncall functionName="AddStatsForThisColumn"/>
     <functioncall functionName="AddStatsUniqueVal"/>
@@ -44,6 +45,7 @@
     <functioncall functionName="OutputStatsColMatchLabel"/>
     <functioncall functionName="OutputStatsColWithOnlyOneValue"/>
     <functioncall functionName="OutputStatsWriteSingleLine"/>
+    <functioncall functionName="OutputUniqueStats"/>
     <functioncall functionName="ParseParameters"/>
     <functioncall functionName="ProcessRowStatsFunc"/>
     <functioncall functionName="StripQuotesString"/>
@@ -123,6 +125,7 @@
     <functioncall functionName="second"/>
     <functioncall functionName="size"/>
     <functioncall functionName="sleep_for"/>
+    <functioncall functionName="sortedUniques"/>
     <functioncall functionName="string"/>
     <functioncall functionName="substr"/>
     <functioncall functionName="thisColStats"/>

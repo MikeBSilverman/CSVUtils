@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <mutex>
 #include <map>
+#include <set>
 
 static CLParams globalParams;
 static FileOps globalFileOps;
@@ -54,6 +55,7 @@ void OutputStatistics();
 long long OutputStatsColMatchLabel();
 long long OutputStatsColWithOnlyOneValue();
 long long OutputStatsCheckSplitForUniqueValues(size_t);
+void OutputUniqueStats();
 void OutputStatsWriteSingleLine(size_t, std::string);
 
 // CSVSplit.exe parameters
@@ -323,6 +325,8 @@ void OutputStatistics() {
 	// May or may not be an issue, but good to check (male vs. female might be a problem, while a one-hot encode may not be an issue)
 	results = OutputStatsCheckSplitForUniqueValues(3);
 	std::cout << "Checking for columns with three unique values found " << results << " times where the ratio is quite poor." << std::endl;
+
+	OutputUniqueStats();
 }
 
 std::string GetTheLabelForThisRow(std::string* rowData) {
@@ -494,6 +498,29 @@ long long OutputStatsCheckSplitForUniqueValues(size_t numUniqueChk) {
 		}
 	}
 	return instances;
+}
+
+void OutputUniqueStats() {
+	std::string outputComplex;
+	for (size_t col = 0; col < statisticsTable.size(); ++col) {
+		outputComplex = "";
+
+		// create a new set for sorting the unique values in descending order
+		std::set<std::pair<std::string, long long>, std::function<bool(std::pair<std::string, long long>, std::pair<std::string, long long>)>> sortedUniques( 
+			statisticsTable[col].uniqueValues.begin(), statisticsTable[col].uniqueValues.end(),
+			[](std::pair<std::string, long long> elem1, std::pair<std::string, long long> elem2) { return elem1.second > elem2.second; });
+
+		// iterate through set and append to output string
+		for (std::pair<std::string, long long> uniqueValue : sortedUniques) {
+			outputComplex.append(",");
+			outputComplex.append(uniqueValue.first);
+			outputComplex.append(",");
+			outputComplex.append(std::to_string(uniqueValue.second));
+		}
+
+		// Write this column's stats
+		OutputStatsWriteSingleLine(col, outputComplex);
+	}
 }
 
 void OutputStatsWriteSingleLine(size_t colNum, std::string msgToOutput) {
