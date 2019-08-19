@@ -1,5 +1,5 @@
+// Originally by Mike Silverman, shared under MIT License
 #pragma once
-//#include "stdafx.h"
 #include "CLParams.h"
 #include <fstream>
 #include <string>

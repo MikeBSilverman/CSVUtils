@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+// Originally by Mike Silverman, shared under MIT License
 #include "CSVFilter.h"
 #include "CLParams.h"
 #include <iostream>

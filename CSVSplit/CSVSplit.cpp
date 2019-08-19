@@ -1,8 +1,7 @@
 // CSV Split utility
 // Helps filter rows of CSV files, split into filter/non-filtered, select certain columns, and more
-// By Mike Silverman
+// Originally by Mike Silverman, shared under MIT License
 
-//#include "stdafx.h"
 #include <string>
 #include <iostream>
 #include <vector>

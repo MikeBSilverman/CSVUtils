@@ -1,4 +1,4 @@
-//#include "stdafx.h"
+// Originally by Mike Silverman, shared under MIT License
 #include "FileOps.h"
 #include <fstream>
 #include <string>

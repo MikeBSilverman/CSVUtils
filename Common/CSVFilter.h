@@ -1,3 +1,4 @@
+// Originally by Mike Silverman, shared under MIT License
 #pragma once
 #include <vector>
 #include <string>

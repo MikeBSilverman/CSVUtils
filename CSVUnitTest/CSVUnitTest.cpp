@@ -1,5 +1,5 @@
 // CSVUnitTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Originally by Mike Silverman, shared under MIT License
 
 //#include "..\CSVSplit\stdafx.h"
 #include "..\Common\CLParams.h"

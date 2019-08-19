@@ -1,5 +1,5 @@
+// Originally by Mike Silverman, shared under MIT License
 #pragma once
-//#include "..\stdafx.h"
 #include <vector>
 #include <string>
 #include <deque>
