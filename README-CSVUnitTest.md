@@ -1,31 +1,21 @@
 # Introduction 
-CSVSplit - help filter CSVs files, or split CSVs based on simple conditions/logic.  (E.g. if MonthCol > 6.)  Or split randomly 80/20.  
-I've found that Python or other tools are not great, especially when working with large #s of rows or columns, as you have your memory as a large constraint.  
-(Microsoft R or RevoScaler is disk focused instead of memory, but it is typically single-threaded for many operations.)  
+CSVUnitTest - get simple statistics on the data within the CSV, quick summary to see if it's fit for ML/AI training.
+Multi-threaded analysis.   
+Flag any errors easily (output is a CSV which can get ingested into other tools).  
 
 # Intended Use Cases
-- keep or remove columns (E.g. trim the label column off of a large dataset)
-- filter out NULLs or other bad data easily
-- split the data 80/20 for training/test purposes
+- Are any columns leading indicators for the label column?  (Did you perhaps leave some working columns in the dataset?  I've done it before...)
+- Any columns with the same value throughout (is a column all 0s or 1s?  Why use that as an input to an ML engine if so?)  
+- Check for bias - pct of male vs. female for example.  Is there, let's say >50% more females than males in this dataset?
+- Quick, simple stats on each column 
 
 All while keeping a low memory profile.  (The biggest factor in performance is Disk I/O)
 
 
-# CSVSplit Command Line Args
-- inputf "file name of data to analyze" (Required)
-- outputf "file name of primary output - if filters = true" (Required)
-- outputfother "file name of other output - if filters = false" (optional for when splitting files)
-- processqueuebuffer # of bytes to use for input buffer (default = 1000000000)  
-- coltoremove# or coltokeep# positive or negative list of column names to keep/remove  
-
-Can then use filter OR percentagesplit, but not both together:
-- filter#  
-    - "Variable to filter on" (Required)   
-	- operand (eq, ne, lt, le, gt, ge) (Required)  
-	- value to search on (Required)  
-	- join operand (AND, OR) (Required for all filters up to n-1)  
-    - e.g. -filter1 Year ge 2009 AND -filter2 Year le 2014  
-- percentagesplit .xx  - e.g. if .80 then 80% goes into normal file, remainder 20% will go into other file  
+# CSVUnitTest Command Line Args
+- inputf "file name of data to analyze" (Required)  
+- outputf "file name of output of statistical analysis" (Required) will be CSV output  
+- labelCol "name of column with the expected output of the model, for comparison" (optional)  
   
 # Build and Test
 Coded using Visual Studio 2017, with either x86 or x64 mode.  (Disable precompiled headers)
