@@ -58,9 +58,9 @@ long long OutputStatsCheckSplitForUniqueValues(size_t);
 void OutputUniqueStats();
 void OutputStatsWriteSingleLine(std::string, size_t, std::string);
 
-// CSVSplit.exe parameters
+// CSVUnitTest.exe parameters
 // -inputf "file name of data to analyze" (Required)
-// -outputf "file name of output of statistical analysis" (Required) will be txt output, not CSV
+// -outputf "file name of output of statistical analysis" (Required) will be CSV output
 // -labelCol "name of column with the expected output of the model, for comparison" (optional)
 
 int main(int argc, char* argv[])
