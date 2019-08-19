@@ -56,7 +56,7 @@ long long OutputStatsColMatchLabel();
 long long OutputStatsColWithOnlyOneValue();
 long long OutputStatsCheckSplitForUniqueValues(size_t);
 void OutputUniqueStats();
-void OutputStatsWriteSingleLine(size_t, std::string);
+void OutputStatsWriteSingleLine(std::string, size_t, std::string);
 
 // CSVSplit.exe parameters
 // -inputf "file name of data to analyze" (Required)
@@ -437,7 +437,7 @@ long long OutputStatsColMatchLabel() {
 	long long instances = 0; 
 	for (size_t col = 0; col < statisticsTable.size(); ++col) {
 		if (statisticsTable[col].doesColumnEqualLabel) {
-			OutputStatsWriteSingleLine(col, " is in lock step with the label column!");
+			OutputStatsWriteSingleLine("Error,LabelColumnMatch", col, statisticsTable[col].mappingThisColToLabel.begin()->first);
 			++instances;
 		}
 	}
@@ -448,7 +448,7 @@ long long OutputStatsColWithOnlyOneValue() {
 	long long instances = 0;
 	for (size_t col = 0; col < statisticsTable.size(); ++col) {
 		if (statisticsTable[col].uniqueValues.size() == 1) {
-			OutputStatsWriteSingleLine(col, " has only one value!");
+			OutputStatsWriteSingleLine("Warning,SingleValue", col, statisticsTable[col].uniqueValues.begin()->first);
 			++instances;
 		}
 	}
@@ -481,16 +481,16 @@ long long OutputStatsCheckSplitForUniqueValues(size_t numUniqueChk) {
 			
 			for (size_t iterCount = 0; iterCount < numUniqueChk; ++iterCount) {
 				if ((iters[iterCount]->second * (thresholdForIssueWithUniqueValCount + 1.0f)) < maxWatermark) {
-					std::string outputComplex = " unique value '";
+					std::string outputComplex = "'";
 					outputComplex.append(iters[iterCount]->first);
-					outputComplex.append("' is below threshold: ");
+					outputComplex.append("',");
 					outputComplex.append(std::to_string(iters[iterCount]->second));
-					outputComplex.append(" vs. ");
+					outputComplex.append(",");
 					outputComplex.append(std::to_string(maxWatermark));
-					outputComplex.append(" times seeing '");
+					outputComplex.append(",'");
 					outputComplex.append(maxWatermarkVal);
 					outputComplex.append("'");
-					OutputStatsWriteSingleLine(col, outputComplex);
+					OutputStatsWriteSingleLine("Warning,ThresholdValue", col, outputComplex);
 					++instances;
 				}
 			}
@@ -512,19 +512,24 @@ void OutputUniqueStats() {
 
 		// iterate through set and append to output string
 		for (std::pair<std::string, long long> uniqueValue : sortedUniques) {
-			outputComplex.append(",");
+			if (outputComplex.length() > 0) {
+				outputComplex.append(",");
+			}
 			outputComplex.append(uniqueValue.first);
 			outputComplex.append(",");
 			outputComplex.append(std::to_string(uniqueValue.second));
 		}
 
 		// Write this column's stats
-		OutputStatsWriteSingleLine(col, outputComplex);
+		OutputStatsWriteSingleLine("Info", col, outputComplex);
 	}
 }
 
-void OutputStatsWriteSingleLine(size_t colNum, std::string msgToOutput) {
-	std::string outputData = columnInfo[colNum];
+void OutputStatsWriteSingleLine(std::string msgWarning, size_t colNum, std::string msgToOutput) {
+	std::string outputData = msgWarning;
+	outputData.append(",");
+	outputData.append(columnInfo[colNum]);
+	outputData.append(",");
 	outputData.append(msgToOutput);
 	globalFileOps.WriteOutputRow(true, &outputData, false);
 }
