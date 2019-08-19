@@ -27,6 +27,18 @@ Can then use filter OR percentagesplit, but not both together:
     - e.g. -filter1 Year ge 2009 AND -filter2 Year le 2014  
 - percentagesplit .xx  - e.g. if .80 then 80% goes into normal file, remainder 20% will go into other file  
   
+# Examples
+- Filter all data year = 2014 and month > 9 out of the main file and into a separate file  
+    - .\CSVSplit.exe -inputf "C:\temp\TrainingDataFull.csv" -outputf "C:\temp\TestData.csv" -outputfother "C:\temp\TrainingDataSubset.csv" -filter1 Year eq 2014 AND -filter2 Month gt 9  
+
+- Strip out the label column and move to a separate file  
+    - .\CSVSplit.exe -inputf "C:\temp\TrainingDataSubset.csv" -outputf "C:\temp\TrainingDataSubset-Y.csv" -coltokeep1 OutcomeLabel  
+    - .\CSVSplit.exe -inputf "C:\temp\TrainingDataSubset.csv" -outputf "C:\temp\TrainingDataSubset-X.csv" -coltoremove1 OutcomeLabel  
+
+- Split the data randomly 80/20   
+    - .\CSVSplit.exe -inputf "C:\Temp\TrainingDataFull.csv" -outputf "C:\Temp\TrainingDataSubset.csv" -outputfother "C:\Temp\TestData.csv" -percentagesplit .8  
+
+
 # Build and Test
 Coded using Visual Studio 2017, with either x86 or x64 mode.  (Disable precompiled headers)
 
