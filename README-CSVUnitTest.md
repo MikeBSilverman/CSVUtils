@@ -16,6 +16,9 @@ All while keeping a low memory profile.  (The biggest factor in performance is D
 - inputf "file name of data to analyze" (Required)  
 - outputf "file name of output of statistical analysis" (Required) will be CSV output  
 - labelCol "name of column with the expected output of the model, for comparison" (optional)  
+
+# Example
+.\CSVUnitTest.exe -inputf "C:\temp\TestData.csv" -outputf "C:\temp\outputstat.csv" -labelCol OutcomeLabel
   
 # Build and Test
 Coded using Visual Studio 2017, with either x86 or x64 mode.  (Disable precompiled headers)
