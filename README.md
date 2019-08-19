@@ -18,4 +18,6 @@ Coded using Visual Studio 2017, with either x86 or x64 mode.  (Disable precompil
 I run CPPCheck for coding issues.  
 
 # Contribute
-Please post issues, submit fixes, and offer up feature requests.
+Please post issues, submit fixes, and offer up feature requests.  
+Be polite and respectful.  
+See the CONTRIBUTING.md file for more.
