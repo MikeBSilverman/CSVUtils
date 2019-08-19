@@ -1,7 +1,7 @@
 # Introduction 
-CSVSplit - help filter CSVs files, or split CSVs based on simple conditions/logic.  (E.g. if MonthCol > 6.)  Or split randomly 80/20.
-I've found that Python or other tools are not great, especially when working with large #s of rows or columns, as you have your memory as a large constraint.
-(Microsoft R or RevoScaler is disk focused instead of memory, but it's limited to R, and that's sometimes out of the ecosystem.)
+CSVSplit - help filter CSVs files, or split CSVs based on simple conditions/logic.  (E.g. if MonthCol > 6.)  Or split randomly 80/20.  
+I've found that Python or other tools are not great, especially when working with large #s of rows or columns, as you have your memory as a large constraint.  
+(Microsoft R or RevoScaler is disk focused instead of memory, but it is typically single-threaded for many operations.)  
 
 # Intended Use Cases
 - keep or remove columns (E.g. trim the label column off of a large dataset)
