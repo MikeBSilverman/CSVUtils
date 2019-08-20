@@ -26,8 +26,8 @@ enum jobType {
 static std::deque<processStruct *> rowsToProcessQueue;
 static std::mutex rowsToProcessMutex;
 
-static std::atomic_bool finishInputs = false;
-static std::atomic_bool finishProcThreads = false;
+static std::atomic_bool finishInputs(false);
+static std::atomic_bool finishProcThreads(false);
 
 static filterOpMap mapFilterOpValues;
 static filterJoinOpMap mapFilterJoinOpValues;
@@ -305,7 +305,7 @@ void ProcessRowFilterFunc(filterParamVectorType* filterInfo) {
 			// Process the row for filtering
 			keepRow = (int)true;
 			if (filterInfo->size() > 0) {
-				_ASSERT(procStruct != nullptr);
+				//ASSERT(procStruct != nullptr);
 				keepRow = ProcessFilterSingleRow(&procStruct->rowData, filterInfo);
 				if (keepRow > (int)true) {
 					// something went wrong
@@ -363,7 +363,7 @@ void ProcessRowPercentageFunc() {
 		}
 
 		if (!emptyQueue) {
-			_ASSERT(procStruct != nullptr);
+			//ASSERT(procStruct != nullptr);
 			if ((procStruct != nullptr) && (procStruct->writeNormal == true)) {
 				// add to normal output queue
 				ApplyKeepRemoveCols(&procStruct->rowData);
