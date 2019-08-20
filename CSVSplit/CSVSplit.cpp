@@ -12,10 +12,10 @@
 #include <algorithm>
 #include <map>
 #include <random>
-#include "..\Common\UtilFuncs.h"
-#include "..\Common\CLParams.h"
-#include "..\Common\CSVFilter.h"
-#include "..\Common\FileOps.h"
+#include "../Common/UtilFuncs.h"
+#include "../Common/CLParams.h"
+#include "../Common/CSVFilter.h"
+#include "../Common/FileOps.h"
 
 enum jobType {
 	jobUseFilters,
