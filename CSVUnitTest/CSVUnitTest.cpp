@@ -17,7 +17,7 @@
 
 static CLParams globalParams;
 static FileOps globalFileOps;
-static std::atomic_bool finishInputs = false;
+static std::atomic_bool finishInputs(false);
 
 static std::deque<processStruct *> rowsToProcessQueue;
 static std::mutex rowsToProcessMutex;
@@ -253,7 +253,7 @@ void ProcessRowStatsFunc() {
 		}
 
 		if (!emptyQueue) {
-			_ASSERT(procStruct != nullptr);
+			//ASSERT(procStruct != nullptr);
 			
 			// Do analysis
 			AnalyzeThisRow(&(procStruct->rowData));
