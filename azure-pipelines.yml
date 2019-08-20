@@ -11,5 +11,5 @@ pool:
 
 steps:
 - script: |
-    make -C ./CSVSplit/ CSVSplit
+    make -std=c++11 -C ./CSVSplit/ CSVSplit
   displayName: 'make'
