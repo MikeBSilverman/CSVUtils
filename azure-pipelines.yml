@@ -11,5 +11,5 @@ pool:
 
 steps:
 - script: |
-    make CXXFLAGS="-std=c++11" -C ./CSVSplit/ CSVSplit
+    make CXXFLAGS="-std=c++11" CSVSplit ./Common/CLParams.h ./Common/CSVFilter.h ./Common/FileOps.h ./Common/UtilFuncs.h -C ./CSVSplit/ 
   displayName: 'make'
