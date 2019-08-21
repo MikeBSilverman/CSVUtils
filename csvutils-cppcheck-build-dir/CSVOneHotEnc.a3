@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<analyzerinfo checksum="2411576639">
+  <FileInfo check="ctu">
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:30:5" call-funcname="IterateThroughFile" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp" linenr="155" call-argexpr="false" call-argvaluetype="0" call-argvalue="0"/><function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:58:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp" linenr="345" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:59:13" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:59:13" call-funcname="GetTheEncValForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp" linenr="412" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:37:6" my-argnr="1"/>
+  </FileInfo>
+  <FileInfo check="Null pointer">
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp:61:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVOneHotEnc/CSVOneHotEnc.cpp" linenr="396"/>
+  </FileInfo>
+  <FileInfo check="CheckUnusedFunctions">
+    <functiondecl functionName="main" lineNumber="71"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="174"/>
+    <functiondecl functionName="MainFileLoop" lineNumber="220"/>
+    <functiondecl functionName="ProcessRowEncFunc" lineNumber="274"/>
+    <functiondecl functionName="AnalyzeThisRow" lineNumber="318"/>
+    <functiondecl functionName="WriteThisRow" lineNumber="330"/>
+    <functiondecl functionName="GetTheEncValForThisRow" lineNumber="337"/>
+    <functiondecl functionName="GetNextCommasInRow" lineNumber="358"/>
+    <functiondecl functionName="GetThisValueFromRow" lineNumber="369"/>
+    <functiondecl functionName="AddStatsForThisColumn" lineNumber="383"/>
+    <functiondecl functionName="AddStatsUniqueVal" lineNumber="395"/>
+    <functiondecl functionName="AddEncodingsToThisRow" lineNumber="408"/>
+    <functiondecl functionName="ApplyRemoveCol" lineNumber="423"/>
+    <functiondecl functionName="ProcessOutputQueueFunc" lineNumber="483"/>
+    <functiondecl functionName="GetUpdatedHeader" lineNumber="505"/>
+    <functioncall functionName="AddDataToOutputQueue"/>
+    <functioncall functionName="AddEncodingsToThisRow"/>
+    <functioncall functionName="AddStatsForThisColumn"/>
+    <functioncall functionName="AddStatsUniqueVal"/>
+    <functioncall functionName="AnalyzeThisRow"/>
+    <functioncall functionName="ApplyRemoveCol"/>
+    <functioncall functionName="CloseFiles"/>
+    <functioncall functionName="FindParamChar"/>
+    <functioncall functionName="GetNextCommasInRow"/>
+    <functioncall functionName="GetOperationalParams"/>
+    <functioncall functionName="GetQueueSize"/>
+    <functioncall functionName="GetTheEncValForThisRow"/>
+    <functioncall functionName="GetThisValueFromRow"/>
+    <functioncall functionName="GetTopOfQueue"/>
+    <functioncall functionName="GetUpdatedHeader"/>
+    <functioncall functionName="IterateThroughFile"/>
+    <functioncall functionName="LoadColumnNames"/>
+    <functioncall functionName="MainFileLoop"/>
+    <functioncall functionName="OpenFiles"/>
+    <functioncall functionName="ParseParameters"/>
+    <functioncall functionName="ProcessOutputQueueFunc"/>
+    <functioncall functionName="ProcessRowEncFunc"/>
+    <functioncall functionName="StripQuotesString"/>
+    <functioncall functionName="V"/>
+    <functioncall functionName="WriteHeaderRow"/>
+    <functioncall functionName="WriteOutputRow"/>
+    <functioncall functionName="WriteThisRow"/>
+    <functioncall functionName="_ASSERT"/>
+    <functioncall functionName="append"/>
+    <functioncall functionName="argc"/>
+    <functioncall functionName="argv"/>
+    <functioncall functionName="atBufferLimit"/>
+    <functioncall functionName="begin"/>
+    <functioncall functionName="bool"/>
+    <functioncall functionName="catch"/>
+    <functioncall functionName="clear"/>
+    <functioncall functionName="colNoChange"/>
+    <functioncall functionName="colNotDefined"/>
+    <functioncall functionName="colRemoveAsKeep"/>
+    <functioncall functionName="colRemoveAsRemove"/>
+    <functioncall functionName="columnInfo"/>
+    <functioncall functionName="defaultPctSplit"/>
+    <functioncall functionName="empty"/>
+    <functioncall functionName="emptyQueue"/>
+    <functioncall functionName="encColName"/>
+    <functioncall functionName="encColNum"/>
+    <functioncall functionName="end"/>
+    <functioncall functionName="eof"/>
+    <functioncall functionName="false"/>
+    <functioncall functionName="find"/>
+    <functioncall functionName="finishInputs"/>
+    <functioncall functionName="finishProcThreads"/>
+    <functioncall functionName="first"/>
+    <functioncall functionName="firstString"/>
+    <functioncall functionName="for"/>
+    <functioncall functionName="foundComma"/>
+    <functioncall functionName="front"/>
+    <functioncall functionName="getline"/>
+    <functioncall functionName="globalParams"/>
+    <functioncall functionName="hardware_concurrency"/>
+    <functioncall functionName="headerRow"/>
+    <functioncall functionName="i"/>
+    <functioncall functionName="if"/>
+    <functioncall functionName="inFile"/>
+    <functioncall functionName="initialLoop"/>
+    <functioncall functionName="inputParameters"/>
+    <functioncall functionName="int"/>
+    <functioncall functionName="isNormalOutput"/>
+    <functioncall functionName="is_open"/>
+    <functioncall functionName="join"/>
+    <functioncall functionName="keepWorking"/>
+    <functioncall functionName="lastFound"/>
+    <functioncall functionName="length"/>
+    <functioncall functionName="lock"/>
+    <functioncall functionName="long"/>
+    <functioncall functionName="max"/>
+    <functioncall functionName="maxRowSize"/>
+    <functioncall functionName="milliseconds"/>
+    <functioncall functionName="newRowData"/>
+    <functioncall functionName="newValue"/>
+    <functioncall functionName="nullptr"/>
+    <functioncall functionName="outputNormalQueueSize"/>
+    <functioncall functionName="overheadThreads"/>
+    <functioncall functionName="pop_front"/>
+    <functioncall functionName="procQueueSize"/>
+    <functioncall functionName="procStruct"/>
+    <functioncall functionName="processQueueBuffer"/>
+    <functioncall functionName="push_back"/>
+    <functioncall functionName="resize"/>
+    <functioncall functionName="return"/>
+    <functioncall functionName="rowData"/>
+    <functioncall functionName="rowStruct"/>
+    <functioncall functionName="runtime_error"/>
+    <functioncall functionName="second"/>
+    <functioncall functionName="size"/>
+    <functioncall functionName="sleep_for"/>
+    <functioncall functionName="string"/>
+    <functioncall functionName="substr"/>
+    <functioncall functionName="thisColStats"/>
+    <functioncall functionName="thisRowEnc"/>
+    <functioncall functionName="thread"/>
+    <functioncall functionName="true"/>
+    <functioncall functionName="unlock"/>
+    <functioncall functionName="v"/>
+    <functioncall functionName="value"/>
+    <functioncall functionName="what"/>
+    <functioncall functionName="while"/>
+  </FileInfo>
+</analyzerinfo>

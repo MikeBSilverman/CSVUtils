@@ -12,10 +12,10 @@
 #include <algorithm>
 #include <map>
 #include <random>
-#include "../Common/UtilFuncs.h"
-#include "../Common/CLParams.h"
-#include "../Common/CSVFilter.h"
-#include "../Common/FileOps.h"
+#include "..\Common\UtilFuncs.h"
+#include "..\Common\CLParams.h"
+#include "..\Common\CSVFilter.h"
+#include "..\Common\FileOps.h"
 
 enum jobType {
 	jobUseFilters,
@@ -305,7 +305,7 @@ void ProcessRowFilterFunc(filterParamVectorType* filterInfo) {
 			// Process the row for filtering
 			keepRow = (int)true;
 			if (filterInfo->size() > 0) {
-				//ASSERT(procStruct != nullptr);
+				_ASSERT(procStruct != nullptr);
 				keepRow = ProcessFilterSingleRow(&procStruct->rowData, filterInfo);
 				if (keepRow > (int)true) {
 					// something went wrong
@@ -363,7 +363,7 @@ void ProcessRowPercentageFunc() {
 		}
 
 		if (!emptyQueue) {
-			//ASSERT(procStruct != nullptr);
+			_ASSERT(procStruct != nullptr);
 			if ((procStruct != nullptr) && (procStruct->writeNormal == true)) {
 				// add to normal output queue
 				ApplyKeepRemoveCols(&procStruct->rowData);

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <results version="2">
     <cppcheck version="1.87"/>
-    <errors/>
+    <errors>
+        <error id="passedByValue" severity="performance" msg="Function parameter &amp;#039;msgWarning&amp;#039; should be passed by const reference." verbose="Parameter &amp;#039;msgWarning&amp;#039; is passed by value. It could be passed as a const reference which is usually faster and recommended in C++." sinceDate="8/21/2019">
+            <location file="CSVUnitTest\CSVUnitTest.cpp" line="527"/>
+        </error>
+    </errors>
 </results>

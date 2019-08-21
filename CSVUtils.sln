@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSVSplit", "CSVSplit\CSVSpl
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSVUnitTest", "CSVUnitTest\CSVUnitTest.vcxproj", "{118B5B86-9314-4354-BA9C-1B426C4AB1B1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CSVOneHotEnc", "CSVOneHotEnc\CSVOneHotEnc.vcxproj", "{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x64.Build.0 = Release|x64
 		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x86.ActiveCfg = Release|Win32
 		{118B5B86-9314-4354-BA9C-1B426C4AB1B1}.Release|x86.Build.0 = Release|Win32
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Debug|x64.ActiveCfg = Debug|x64
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Debug|x64.Build.0 = Debug|x64
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Debug|x86.ActiveCfg = Debug|Win32
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Debug|x86.Build.0 = Debug|Win32
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Release|x64.ActiveCfg = Release|x64
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Release|x64.Build.0 = Release|x64
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Release|x86.ActiveCfg = Release|Win32
+		{BC9599BD-C675-49D0-A3B0-3C19DF8DFAE4}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
