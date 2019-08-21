@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="1831618499">
+<analyzerinfo checksum="4025243768">
   <FileInfo check="ctu">
-<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:41:11" call-funcname="MainInputFileLoop" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="184" call-argexpr="isOtherOutputThreadNeeded" call-argvaluetype="0" call-argvalue="0" warning="true">
-  <path filename="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" linenr="179" info="Assuming that condition 'isOtherOutputThreadNeeded' is not redundant"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:40:11" call-funcname="MainInputFileLoop" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="183" call-argexpr="isOtherOutputThreadNeeded" call-argvaluetype="0" call-argvalue="0" warning="true">
+  <path filename="C:\Users\mikeb\source\repos\CSVUtils\CSVSplit\CSVSplit.cpp" linenr="178" info="Assuming that condition 'isOtherOutputThreadNeeded' is not redundant"/>
 </function-call>  </FileInfo>
   <FileInfo check="Uninitialized variables">
-    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:42:5" my-argnr="2" my-argname="ptrFilterInfo" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="423"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp:41:5" my-argnr="2" my-argname="ptrFilterInfo" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVSplit/CSVSplit.cpp" linenr="422"/>
   </FileInfo>
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="68"/>
-    <functiondecl functionName="IterateThroughFile" lineNumber="149"/>
-    <functiondecl functionName="MainInputFileLoop" lineNumber="211"/>
-    <functiondecl functionName="ProcessRowFilterFunc" lineNumber="285"/>
-    <functiondecl functionName="ProcessRowPercentageFunc" lineNumber="348"/>
-    <functiondecl functionName="ProcessOutputQueueFunc" lineNumber="397"/>
-    <functiondecl functionName="ProcessFilterSingleRow" lineNumber="420"/>
-    <functiondecl functionName="ApplyKeepRemoveCols" lineNumber="520"/>
-    <functiondecl functionName="GenerateListOfRowsToSplit" lineNumber="601"/>
+    <functiondecl functionName="main" lineNumber="67"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="148"/>
+    <functiondecl functionName="MainInputFileLoop" lineNumber="210"/>
+    <functiondecl functionName="ProcessRowFilterFunc" lineNumber="284"/>
+    <functiondecl functionName="ProcessRowPercentageFunc" lineNumber="347"/>
+    <functiondecl functionName="ProcessOutputQueueFunc" lineNumber="396"/>
+    <functiondecl functionName="ProcessFilterSingleRow" lineNumber="419"/>
+    <functiondecl functionName="ApplyKeepRemoveCols" lineNumber="519"/>
+    <functiondecl functionName="GenerateListOfRowsToSplit" lineNumber="600"/>
     <functioncall functionName="AddDataToOutputQueue"/>
     <functioncall functionName="ApplyKeepRemoveCols"/>
     <functioncall functionName="CloseFiles"/>

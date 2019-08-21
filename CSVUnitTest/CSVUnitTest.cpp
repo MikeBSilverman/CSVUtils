@@ -1,7 +1,6 @@
 // CSVUnitTest.cpp : This file contains the 'main' function. Program execution begins and ends there.
 // Originally by Mike Silverman, shared under MIT License
 
-//#include "..\CSVSplit\stdafx.h"
 #include "..\Common\CLParams.h"
 #include "..\Common\FileOps.h"
 #include "..\Common\UtilFuncs.h"
@@ -253,7 +252,7 @@ void ProcessRowStatsFunc() {
 		}
 
 		if (!emptyQueue) {
-			//ASSERT(procStruct != nullptr);
+			_ASSERT(procStruct != nullptr);
 			
 			// Do analysis
 			AnalyzeThisRow(&(procStruct->rowData));
@@ -525,6 +524,7 @@ void OutputUniqueStats() {
 	}
 }
 
+// CPPCheck gives a performance warning because not using pass by ref.  Unavoidable.
 void OutputStatsWriteSingleLine(std::string msgWarning, size_t colNum, std::string msgToOutput) {
 	std::string outputData = msgWarning;
 	outputData.append(",");

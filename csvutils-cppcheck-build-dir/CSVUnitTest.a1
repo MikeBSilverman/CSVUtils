@@ -1,31 +1,35 @@
 <?xml version="1.0"?>
-<analyzerinfo checksum="3591574551">
+<analyzerinfo checksum="2080252489">
   <FileInfo check="ctu">
-<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:49:13" call-funcname="GetTheLabelForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="285" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:28:6" my-argnr="1"/>
-<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="340" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:49:13" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" call-funcname="GetTheLabelForThisRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="284" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:27:6" my-argnr="1"/>
+<function-call call-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:47:6" call-funcname="GetNextCommasInRow" call-argnr="1" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="339" my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:48:13" my-argnr="1"/>
   </FileInfo>
   <FileInfo check="Null pointer">
-    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:51:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="396"/>
-    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:52:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="411"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:50:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="395"/>
+    <unsafe-usage my-id="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp:51:6" my-argnr="1" my-argname="thisColStats" filename="C:/Users/mikeb/source/repos/CSVUtils/CSVUnitTest/CSVUnitTest.cpp" linenr="410"/>
   </FileInfo>
+        <error id="passedByValue" severity="performance" msg="Function parameter &apos;msgWarning&apos; should be passed by const reference." verbose="Parameter &apos;msgWarning&apos; is passed by value. It could be passed as a const reference which is usually faster and recommended in C++." cwe="398">
+            <location file0="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" file="C:\Users\mikeb\source\repos\CSVUtils\CSVUnitTest\CSVUnitTest.cpp" line="527"/>
+            <symbol>msgWarning</symbol>
+        </error>
   <FileInfo check="CheckUnusedFunctions">
-    <functiondecl functionName="main" lineNumber="66"/>
-    <functiondecl functionName="IterateThroughFile" lineNumber="149"/>
-    <functiondecl functionName="MainInputFileLoop" lineNumber="187"/>
-    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="238"/>
-    <functiondecl functionName="AnalyzeThisRow" lineNumber="275"/>
-    <functiondecl functionName="OutputStatistics" lineNumber="306"/>
-    <functiondecl functionName="GetTheLabelForThisRow" lineNumber="332"/>
-    <functiondecl functionName="GetNextCommasInRow" lineNumber="353"/>
-    <functiondecl functionName="GetThisValueFromRow" lineNumber="364"/>
-    <functiondecl functionName="AddStatsForThisColumn" lineNumber="378"/>
-    <functiondecl functionName="AddStatsUniqueVal" lineNumber="395"/>
-    <functiondecl functionName="AddStatsColToLabel" lineNumber="409"/>
-    <functiondecl functionName="OutputStatsColMatchLabel" lineNumber="436"/>
-    <functiondecl functionName="OutputStatsColWithOnlyOneValue" lineNumber="447"/>
-    <functiondecl functionName="OutputStatsCheckSplitForUniqueValues" lineNumber="458"/>
-    <functiondecl functionName="OutputUniqueStats" lineNumber="503"/>
-    <functiondecl functionName="OutputStatsWriteSingleLine" lineNumber="526"/>
+    <functiondecl functionName="main" lineNumber="65"/>
+    <functiondecl functionName="IterateThroughFile" lineNumber="148"/>
+    <functiondecl functionName="MainInputFileLoop" lineNumber="186"/>
+    <functiondecl functionName="ProcessRowStatsFunc" lineNumber="237"/>
+    <functiondecl functionName="AnalyzeThisRow" lineNumber="274"/>
+    <functiondecl functionName="OutputStatistics" lineNumber="305"/>
+    <functiondecl functionName="GetTheLabelForThisRow" lineNumber="331"/>
+    <functiondecl functionName="GetNextCommasInRow" lineNumber="352"/>
+    <functiondecl functionName="GetThisValueFromRow" lineNumber="363"/>
+    <functiondecl functionName="AddStatsForThisColumn" lineNumber="377"/>
+    <functiondecl functionName="AddStatsUniqueVal" lineNumber="394"/>
+    <functiondecl functionName="AddStatsColToLabel" lineNumber="408"/>
+    <functiondecl functionName="OutputStatsColMatchLabel" lineNumber="435"/>
+    <functiondecl functionName="OutputStatsColWithOnlyOneValue" lineNumber="446"/>
+    <functiondecl functionName="OutputStatsCheckSplitForUniqueValues" lineNumber="457"/>
+    <functiondecl functionName="OutputUniqueStats" lineNumber="502"/>
+    <functiondecl functionName="OutputStatsWriteSingleLine" lineNumber="527"/>
     <functioncall functionName="AddStatsColToLabel"/>
     <functioncall functionName="AddStatsForThisColumn"/>
     <functioncall functionName="AddStatsUniqueVal"/>
@@ -108,6 +112,7 @@
     <functioncall functionName="maxWatermarkVal"/>
     <functioncall functionName="milliseconds"/>
     <functioncall functionName="msgToOutput"/>
+    <functioncall functionName="msgWarning"/>
     <functioncall functionName="newValue"/>
     <functioncall functionName="nullptr"/>
     <functioncall functionName="numUniqueChk"/>
